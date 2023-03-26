@@ -38,7 +38,7 @@ namespace Assets.Scripts.Systems.Equipment
         private Collider2D _equipedItemCollider;
         private Dictionary<ItemType, List<GameObject>> _inventory;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _collider = GetComponent<Collider2D>();
             _inventory = new Dictionary<ItemType, List<GameObject>>();
@@ -47,6 +47,11 @@ namespace Assets.Scripts.Systems.Equipment
             {
                 _inventory.Add(itemType, new List<GameObject>());
             }
+        }
+
+        protected virtual void OnDisable() 
+        {
+            StopUseEquipedItem();
         }
 
         public void AddItem(GameObject item)

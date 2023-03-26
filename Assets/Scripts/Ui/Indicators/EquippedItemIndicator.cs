@@ -13,10 +13,7 @@ namespace Assets.Scripts.Ui.Indicators
         {
             set
             {
-                if (_equipmentSystem != null)
-                {
-                    UnsubscribeFromEvents();
-                }
+                UnsubscribeFromEvents();
 
                 _equipmentSystem = value;
 
@@ -36,19 +33,20 @@ namespace Assets.Scripts.Ui.Indicators
             _cooldownText = transform.Find("CooldownText").GetComponent<TextMeshProUGUI>();
         }
 
-        private void Start()
-        {
-            EquipmentSystem = _equipmentSystem;
-        }
-
         protected override void SubscribeToEvents()
         {
-            _equipmentSystem.NewItemEquipped += OnNewItemEquipped;
+            if (_equipmentSystem != null)
+            {
+                _equipmentSystem.NewItemEquipped += OnNewItemEquipped;
+            }
         }
 
         protected override void UnsubscribeFromEvents()
         {
-            _equipmentSystem.NewItemEquipped -= OnNewItemEquipped;
+            if (_equipmentSystem != null)
+            {
+                _equipmentSystem.NewItemEquipped -= OnNewItemEquipped;
+            }
         }
 
         protected virtual void Update()
@@ -63,16 +61,19 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected override void ResetIndicator()
         {
-            if (_equipmentSystem.EquipedItem != null)
+            if (_equipmentSystem != null)
             {
-                _itemImage.sprite = _equipmentSystem.EquipedItem.GetComponent<SpriteRenderer>().sprite;
-                _itemImage.enabled = true;
-            }
-            else
-            {
-                _itemImage.enabled = false;
-                _itemImage.sprite = null;
-                _cooldownText.text = string.Empty;
+                if (_equipmentSystem.EquipedItem != null)
+                {
+                    _itemImage.sprite = _equipmentSystem.EquipedItem.GetComponent<SpriteRenderer>().sprite;
+                    _itemImage.enabled = true;
+                }
+                else
+                {
+                    _itemImage.enabled = false;
+                    _itemImage.sprite = null;
+                    _cooldownText.text = string.Empty;
+                }
             }
         }
 

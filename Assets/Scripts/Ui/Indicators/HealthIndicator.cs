@@ -16,20 +16,12 @@ namespace Assets.Scripts.Ui.Indicators
 
                 _healthSysyem = value;
 
-                if (isActiveAndEnabled)
-                {
-                    SubscribeToEvents();
-                    ResetIndicator();
-                }
+                SubscribeToEvents();
+                ResetIndicator();
             }
         }
-        [SerializeField]
-        private HealthSystem _healthSysyem;
 
-        private void Start()
-        {
-            HealthSystem = _healthSysyem;
-        }
+        private HealthSystem _healthSysyem;
 
         protected override void SubscribeToEvents()
         {
@@ -67,8 +59,11 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected override void ResetIndicator()
         {
-            RemoveHealthIcons(transform.childCount);
-            AddHealthIcons(_healthSysyem.CurrentHealthPoints);
+            if (_healthSysyem != null)
+            {
+                RemoveHealthIcons(transform.childCount);
+                AddHealthIcons(_healthSysyem.CurrentHealthPoints);
+            }
         }
 
         private void UpdateHealthIndicator(object sender, EventArgs args)

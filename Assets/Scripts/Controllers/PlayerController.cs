@@ -17,7 +17,6 @@ namespace Assets.Scripts.Controllers
         private EquipmentSystem _equipment;
         private ItemCollector _itemCollector;
         private DoorDetector _doorDetector;
-        private GameObject _pauseMenu;
         private const float _cameraYOffset = 1.5f;
         private KeyCode _moveRightKey = KeyCode.D;
         private KeyCode _moveLeftKey = KeyCode.A;
@@ -38,7 +37,6 @@ namespace Assets.Scripts.Controllers
             _equipment = GetComponent<EquipmentSystem>();
             _itemCollector = GetComponent<ItemCollector>();
             _doorDetector = GetComponent<DoorDetector>();
-            _pauseMenu = GameObject.Find("PauseMenu");
 
             _movementStateManager.Manage<DefaultGroundedMovementState>();
             _movementStateManager.Manage<DefaultInAirMovementState>();
@@ -49,11 +47,6 @@ namespace Assets.Scripts.Controllers
             base.Update();
 
             _cameraTransform.position = new Vector3(transform.position.x, transform.position.y + _cameraYOffset, _cameraTransform.position.z);
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                _pauseMenu.SetActive(!_pauseMenu.activeSelf);
-            }
 
             if (Input.GetKeyDown(_nextItemKey))
             {

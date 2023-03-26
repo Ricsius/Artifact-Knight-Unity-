@@ -7,6 +7,7 @@ namespace Assets.Scripts.Ui.Menus
     public class PauseMenu : MonoBehaviour
     {
         private CheckpointManager _checkpointManager;
+        private bool _isHidden;
 
         protected virtual void Awake() 
         {
@@ -15,23 +16,34 @@ namespace Assets.Scripts.Ui.Menus
 
         protected virtual void Start()
         {
-            Resume();
+            Hide();
         }
 
-        protected virtual void OnEnable() 
+        protected virtual void Update()
         {
-            Time.timeScale = 0f;
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (_isHidden)
+                {
+                    Hide();
+                }
+                else
+                {
+                    Pause();
+                }
+            }
         }
 
-        protected virtual void OnDisable()
-        {
-            Resume();
-        }
-
-        public void Resume()
+        public void Hide()
         {
             Time.timeScale = 1f;
-            gameObject.SetActive(false);
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+
+            _isHidden = false;
         }
 
         public void PutPlayerToLastCheckpoint()
@@ -42,6 +54,18 @@ namespace Assets.Scripts.Ui.Menus
         public void ExitToMainMenu()
         {
             SceneManager.LoadScene(0);
+        }
+
+        private void Pause()
+        {
+            Time.timeScale = 0f;
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
+
+            _isHidden = true;
         }
     }
 }
