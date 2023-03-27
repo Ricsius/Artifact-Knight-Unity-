@@ -37,6 +37,8 @@ namespace Assets.Scripts.Systems.Equipment
         private SpriteRenderer _equipedItemRenderer;
         private Collider2D _equipedItemCollider;
         private Dictionary<ItemType, List<GameObject>> _inventory;
+        [SerializeField]
+        private List<GameObject> _preparedItems;
 
         protected virtual void Awake()
         {
@@ -49,6 +51,14 @@ namespace Assets.Scripts.Systems.Equipment
             }
         }
 
+        protected virtual void Start()
+        {
+            foreach (GameObject item in _preparedItems)
+            {
+                AddItem(Instantiate(item));
+            }
+        }
+        
         protected virtual void OnDisable() 
         {
             StopUseEquipedItem();
@@ -79,13 +89,14 @@ namespace Assets.Scripts.Systems.Equipment
             }
 
             NewItemAdded?.Invoke(this, new ItemEventArgs(item));
+
+            item.GetComponent<SpriteRenderer>().enabled = false;
+            item.GetComponent<Collider2D>().enabled = false;
         }
 
-        private void UnEquipEquipedItem()
+        public bool ContainsItem(GameObject item)
         {
-            _equipedItemScript = null;
-            _equipedItemRenderer = null;
-            _equipedItemCollider = null;
+            return _inventory.Any(p => p.Value.Contains(item));
         }
 
         public void EquipNextItem()
@@ -122,6 +133,13 @@ namespace Assets.Scripts.Systems.Equipment
                 _equipedItemRenderer.enabled = false;
                 _equipedItemCollider.enabled = false;
             }
+        }
+
+        private void UnEquipEquipedItem()
+        {
+            _equipedItemScript = null;
+            _equipedItemRenderer = null;
+            _equipedItemCollider = null;
         }
     }
 }

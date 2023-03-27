@@ -33,9 +33,6 @@ namespace Assets.Scripts.Systems.Equipment
             if (_collectableItem != null)
             {
                 _equipmentSystem.AddItem(_collectableItem);
-
-                _collectableItem.GetComponent<SpriteRenderer>().enabled = false;
-                _collectableItem.GetComponent<Collider2D>().enabled = false;
             }
         }
     }

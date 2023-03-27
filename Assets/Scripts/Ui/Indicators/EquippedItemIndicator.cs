@@ -21,7 +21,6 @@ namespace Assets.Scripts.Ui.Indicators
                 ResetIndicator();
             }
         }
-        [SerializeField]
         private EquipmentSystem _equipmentSystem;
         private Image _itemImage;
         private EquipableItem _item;
@@ -31,6 +30,8 @@ namespace Assets.Scripts.Ui.Indicators
         {
             _itemImage = transform.Find("ItemImage").GetComponent<Image>();
             _cooldownText = transform.Find("CooldownText").GetComponent<TextMeshProUGUI>();
+
+            _cooldownText.text = string.Empty;
         }
 
         protected override void SubscribeToEvents()

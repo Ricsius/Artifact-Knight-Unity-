@@ -29,5 +29,10 @@ namespace Assets.Scripts.Detectors
         {
             return gameObject.tag.Equals("Projectile");
         }
+
+        public static bool IsProfessor(GameObject gameObject)
+        {
+            return gameObject.tag.Equals("Professor");
+        }
     }
 }

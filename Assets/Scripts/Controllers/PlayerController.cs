@@ -17,6 +17,7 @@ namespace Assets.Scripts.Controllers
         private EquipmentSystem _equipment;
         private ItemCollector _itemCollector;
         private DoorDetector _doorDetector;
+        private ProfessorDetector _professorDetector;
         private const float _cameraYOffset = 1.5f;
         private KeyCode _moveRightKey = KeyCode.D;
         private KeyCode _moveLeftKey = KeyCode.A;
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Controllers
             _equipment = GetComponent<EquipmentSystem>();
             _itemCollector = GetComponent<ItemCollector>();
             _doorDetector = GetComponent<DoorDetector>();
+            _professorDetector = GetComponent<ProfessorDetector>();
 
             _movementStateManager.Manage<DefaultGroundedMovementState>();
             _movementStateManager.Manage<DefaultInAirMovementState>();
@@ -95,6 +97,13 @@ namespace Assets.Scripts.Controllers
                     {
                         doorScript.TryOpen(key);
                     }
+                }
+
+                Professor professor = _professorDetector.Detect().FirstOrDefault()?.GetComponent<Professor>();
+
+                if (professor != null) 
+                {
+                    professor.CheckEquipment(_equipment);
                 }
             }
 

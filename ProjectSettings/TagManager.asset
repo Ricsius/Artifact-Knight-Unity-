@@ -9,6 +9,7 @@ TagManager:
   - Ladder
   - Projectile
   - Door
+  - Professor
   layers:
   - Default
   - TransparentFX
