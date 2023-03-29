@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Detectors
 {
-    public class LadderDetector : DetectorBase
+    public class LadderDetector : DetectorBase<IEnumerable<GameObject>>
     {
         private Collider2D _collider;
 

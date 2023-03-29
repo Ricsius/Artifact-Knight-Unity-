@@ -29,7 +29,7 @@ namespace Assets.Scripts.Systems.Score
         private void OnNewItemAdded(object sender, EventArgs args)
         {
             ItemEventArgs itemArgs = args as ItemEventArgs;
-            int itemScoreValue = itemArgs.Item.GetComponent<ItemBase>().ScoreValue;
+            int itemScoreValue = itemArgs.Item.ScoreValue;
 
             Score += itemScoreValue;
 

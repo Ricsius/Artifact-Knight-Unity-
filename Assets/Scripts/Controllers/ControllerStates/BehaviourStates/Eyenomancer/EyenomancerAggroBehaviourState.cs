@@ -49,9 +49,9 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             }
         }
 
-        protected override void Init()
+        protected override void Reset()
         {
-            base.Init();
+            base.Reset();
 
             if (_controller == null)
             {

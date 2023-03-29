@@ -1,5 +1,6 @@
 
 using Assets.Scripts.Detectors;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Systems.Equipment
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Systems.Equipment
         {
             if (_collectableItem != null)
             {
-                _equipmentSystem.AddItem(_collectableItem);
+                _equipmentSystem.AddItem(_collectableItem.GetComponent<ItemBase>());
             }
         }
     }

@@ -82,7 +82,7 @@ namespace Assets.Scripts.Ui.Indicators
         {
             ItemEventArgs itemEquipArgs = args as ItemEventArgs;
 
-            _item = itemEquipArgs.Item.GetComponent<EquipableItem>();
+            _item = itemEquipArgs.Item as EquipableItem;
             _itemImage.sprite = itemEquipArgs.Item.GetComponent<SpriteRenderer>().sprite;
             _itemImage.enabled = true;
         }

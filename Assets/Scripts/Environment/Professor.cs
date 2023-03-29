@@ -17,7 +17,7 @@ namespace Assets.Scripts.Environment
 
         public void CheckEquipment(EquipmentSystem equipment)
         {
-            bool hasRequiredItem = equipment.ContainsItem(RequiredItem.gameObject);
+            bool hasRequiredItem = equipment.ContainsItem(RequiredItem);
 
             if (hasRequiredItem)
             {

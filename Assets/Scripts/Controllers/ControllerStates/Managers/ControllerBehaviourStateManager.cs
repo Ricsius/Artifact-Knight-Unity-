@@ -50,13 +50,18 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
             state.MovementStateManager = _movementStateManager;
 
             _behaviourStates[state.Type] = state;
+
+            if (CurrentBehaviourState == null)
+            {
+                CurrentBehaviourState = state;
+            }
         }
 
         private void OnBehaviorStateChangeRequest(object sender, EventArgs args)
         {
             BehaviourStaceChangeRequestEventArgs stateChangeRequestChangeArgs = args as BehaviourStaceChangeRequestEventArgs;
 
-            bool b = TrySetCurrentBehaviorState(stateChangeRequestChangeArgs.BehaviourStateType);
+            TrySetCurrentBehaviorState(stateChangeRequestChangeArgs.BehaviourStateType);
         }
     }
 }

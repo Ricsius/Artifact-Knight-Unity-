@@ -5,7 +5,6 @@ using Assets.Scripts.Spawners;
 using Assets.Scripts.Timers;
 using Assets.Scripts.Ui.Indicators;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable
@@ -14,14 +13,6 @@ namespace Assets.Scripts.Items.Equipable
     {
         [SerializeField]
         private float _transformationDuration;
-        [SerializeField]
-        private float _transformationMovementSpeed;
-        [SerializeField]
-        private float _transformationJumpForce;
-        [SerializeField]
-        private ControllerMovementStateType _transformationStartingMovementState;
-        [SerializeField]
-        private ControllerBase _defaultTrasformationController;
         private GameObject _owner;
         private bool _isOwnedByPlayer;
         private SpawnerBase _spawner;
@@ -49,7 +40,6 @@ namespace Assets.Scripts.Items.Equipable
         {
             SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;
             GameObject transformation = spawnedArgs.SpawnedObject;
-            ControllerBase transformationController;
             DeathTimer deathTimer = transformation.AddComponent<DeathTimer>();
 
             deathTimer.DeathTime = _transformationDuration;
@@ -59,16 +49,19 @@ namespace Assets.Scripts.Items.Equipable
 
             if (_isOwnedByPlayer)
             {
-                transformationController = transformation.AddComponent<PlayerController>();
+                ControllerBase transformationController = transformation.GetComponent<ControllerBase>();
+                float speed = transformationController.MovementSpeed;
+                float jumpForce = transformationController.JumpForce;
+
+                Destroy(transformationController);
+                //ToDo: Fix Dragon warnings
+                PlayerController playerController = transformation.AddComponent<PlayerController>();
+
+                playerController.MovementSpeed = speed;
+                playerController.JumpForce = jumpForce;
+
                 transformation.AddComponent<PlayerTransformationIndicatorTarget>();
             }
-            else
-            {
-                transformationController = transformation.AddComponent(_defaultTrasformationController.GetType()) as ControllerBase;
-            }
-
-            transformationController.MovementSpeed = _transformationMovementSpeed;
-            transformationController.JumpForce= _transformationJumpForce;
 
             deathTimer.StartTimer();
         }

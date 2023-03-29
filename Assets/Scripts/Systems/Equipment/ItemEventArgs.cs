@@ -1,12 +1,12 @@
+using Assets.Scripts.Items;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Systems.Equipment
 {
     public class ItemEventArgs : EventArgs
     {
-        public GameObject Item { get; }
-        public ItemEventArgs(GameObject item)
+        public ItemBase Item { get; }
+        public ItemEventArgs(ItemBase item)
         {
             Item = item;
         }

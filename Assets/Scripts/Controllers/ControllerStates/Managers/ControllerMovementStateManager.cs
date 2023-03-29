@@ -49,6 +49,11 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
             state.Manager= this;
 
             _movementStates[state.Type] = state;
+
+            if (CurrentMovementState == null)
+            {
+                CurrentMovementState = state;
+            }
         }
 
         private void OnAnimationParameterChangeRequest(object sender, EventArgs args)
@@ -66,7 +71,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
                 {
                     _animator.SetBool(_currentAnimationParameterName, false);
                 }
-
+                
                 _currentAnimationParameterName = parameterName;
                 _animator.SetBool(_currentAnimationParameterName, true);
 

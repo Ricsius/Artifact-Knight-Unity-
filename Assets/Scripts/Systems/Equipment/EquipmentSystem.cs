@@ -11,51 +11,45 @@ namespace Assets.Scripts.Systems.Equipment
 {
     public class EquipmentSystem : MonoBehaviour
     {
-        public GameObject EquipedItem
+        public EquipableItem EquipedItem
         {
             get
             {
                 return _equipedItemIndex >= 0
-                    ? _inventory[ItemType.Equipable][_equipedItemIndex]
+                    ? _inventory[ItemType.Equipable][_equipedItemIndex] as EquipableItem
                     : null;
             }
         }
-        public IEnumerable<KeyItem> Keys
-        {
-            get 
-            {
-                return _inventory[ItemType.Key]
-                    .Select(i => i.GetComponent<KeyItem>())
-                    .ToArray();
-            }
-        }
+
         public EventHandler NewItemEquipped;
         public EventHandler NewItemAdded;
         private Collider2D _collider;
         private int _equipedItemIndex = -1;
-        private EquipableItem _equipedItemScript;
         private SpriteRenderer _equipedItemRenderer;
         private Collider2D _equipedItemCollider;
-        private Dictionary<ItemType, List<GameObject>> _inventory;
+        private Dictionary<ItemType, List<ItemBase>> _inventory;
         [SerializeField]
-        private List<GameObject> _preparedItems;
+        private List<ItemBase> _preparedItems;
 
         protected virtual void Awake()
         {
             _collider = GetComponent<Collider2D>();
-            _inventory = new Dictionary<ItemType, List<GameObject>>();
+            _inventory = new Dictionary<ItemType, List<ItemBase>>();
 
             foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)))
             {
-                _inventory.Add(itemType, new List<GameObject>());
+                _inventory.Add(itemType, new List<ItemBase>());
             }
         }
 
         protected virtual void Start()
         {
-            foreach (GameObject item in _preparedItems)
+            foreach (ItemBase item in _preparedItems)
             {
-                AddItem(Instantiate(item));
+                GameObject clone = Instantiate(item.gameObject);
+                ItemBase cloneItem = clone.GetComponent<ItemBase>();
+
+                AddItem(cloneItem);
             }
         }
         
@@ -64,15 +58,13 @@ namespace Assets.Scripts.Systems.Equipment
             StopUseEquipedItem();
         }
 
-        public void AddItem(GameObject item)
+        public void AddItem(ItemBase item)
         {
-            ItemBase itemScript = item.GetComponent<ItemBase>();
+            _inventory[item.Type].Add(item);
 
-            _inventory[itemScript.Type].Add(item);
+            item.OnAddedToEquipment(gameObject);
 
-            itemScript.OnAddedToEquipment(gameObject);
-
-            if (itemScript.Type == ItemType.Equipable)
+            if (item.Type == ItemType.Equipable)
             {
                 Collider2D itemCollider = item.GetComponent<Collider2D>();
                 float sign = transform.right.x > 0f ? 1f : -1f;
@@ -94,9 +86,16 @@ namespace Assets.Scripts.Systems.Equipment
             item.GetComponent<Collider2D>().enabled = false;
         }
 
-        public bool ContainsItem(GameObject item)
+        public bool ContainsItem(ItemBase item)
         {
             return _inventory.Any(p => p.Value.Contains(item));
+        }
+
+        public KeyItem GetKey(KeyType keyType)
+        {
+            return _inventory[ItemType.Key]
+                .Select(i => i as KeyItem)
+                .FirstOrDefault(k => k .KeyType == keyType);
         }
 
         public void EquipNextItem()
@@ -107,7 +106,6 @@ namespace Assets.Scripts.Systems.Equipment
 
                 _equipedItemIndex = (_equipedItemIndex + 1) % _inventory[ItemType.Equipable].Count;
 
-                _equipedItemScript = EquipedItem.GetComponent<EquipableItem>();
                 _equipedItemRenderer = EquipedItem.GetComponent<SpriteRenderer>();
                 _equipedItemCollider = EquipedItem.GetComponent<Collider2D>();
 
@@ -122,7 +120,7 @@ namespace Assets.Scripts.Systems.Equipment
                 _equipedItemRenderer.enabled = true;
                 _equipedItemCollider.enabled = true;
                 _equipedItemRenderer.sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder;
-                _equipedItemScript.Use();
+                EquipedItem.Use();
             }
         }
 
@@ -137,7 +135,6 @@ namespace Assets.Scripts.Systems.Equipment
 
         private void UnEquipEquipedItem()
         {
-            _equipedItemScript = null;
             _equipedItemRenderer = null;
             _equipedItemCollider = null;
         }

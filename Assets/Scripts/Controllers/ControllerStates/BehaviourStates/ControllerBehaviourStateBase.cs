@@ -17,7 +17,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
             {
                 _manager= value;
 
-                Init();
+                Reset();
             } 
         }
         public ControllerMovementStateManager MovementStateManager { protected get; set; }
@@ -82,7 +82,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
             return ret;
         }
 
-        protected virtual void Init()
+        protected virtual void Reset()
         {
             _transform = _manager.Owner.transform;
             _collider = _manager.Owner.GetComponent<Collider2D>();

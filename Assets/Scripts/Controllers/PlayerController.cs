@@ -4,7 +4,6 @@ using Assets.Scripts.Detectors;
 using Assets.Scripts.Environment;
 using Assets.Scripts.Items.Key;
 using Assets.Scripts.Systems.Equipment;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -78,33 +77,7 @@ namespace Assets.Scripts.Controllers
 
             if (Input.GetKeyDown(_interactionKey))
             {
-                _itemCollector.CollectItem();
-
-                if (_ladderCheck)
-                {
-                    _movementStateManager.TrySetCurrentMovementState(ControllerMovementStateType.OnLadder);
-                }
-
-                IEnumerable<GameObject> doors = _doorDetector.Detect();
-                IEnumerable<KeyItem> keys = _equipment.Keys;
-
-                foreach (GameObject door in doors)
-                {
-                    Door doorScript = door.GetComponent<Door>();
-                    KeyItem key = keys.FirstOrDefault(k => k.KeyType == doorScript.KeyTypeToOpen);
-
-                    if (key != null) 
-                    {
-                        doorScript.TryOpen(key);
-                    }
-                }
-
-                Professor professor = _professorDetector.Detect().FirstOrDefault()?.GetComponent<Professor>();
-
-                if (professor != null) 
-                {
-                    professor.CheckEquipment(_equipment);
-                }
+                Interact();
             }
 
             if (Input.GetKeyDown(_useItemKey))
@@ -117,7 +90,7 @@ namespace Assets.Scripts.Controllers
                 _equipment.StopUseEquipedItem();
             }
         }
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
 
             if (Input.GetKey(_moveUpKey) && !Input.GetKey(_moveDownKey) && _rigidBody.gravityScale == 0)
@@ -148,6 +121,35 @@ namespace Assets.Scripts.Controllers
             if (Input.GetKey(_moveLeftKey) && !Input.GetKey(_moveRightKey))
             {
                 _movementStateManager.CurrentMovementState.Move(Vector2.left);
+            }
+        }
+
+        private void Interact()
+        {
+            _itemCollector.CollectItem();
+
+            if (_ladderCheck)
+            {
+                _movementStateManager.TrySetCurrentMovementState(ControllerMovementStateType.OnLadder);
+            }
+
+            Door door = _doorDetector.Detect();
+
+            if (door != null)
+            {
+                KeyItem key = _equipment.GetKey(door.KeyTypeToOpen);
+
+                if (key != null)
+                {
+                    door.TryOpen(key);
+                }
+            }
+
+            Professor professor = _professorDetector.Detect();
+
+            if (professor != null)
+            {
+                professor.CheckEquipment(_equipment);
             }
         }
     }
