@@ -56,7 +56,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             if (_controller == null)
             {
                 _controller = _manager.Owner.GetComponent<EyenomancerController>();
-                _spawner = _transform.Find("SpawnLocation").GetComponent<SpawnerBase>();
+                _spawner = _transform.GetComponentInChildren<SpawnerBase>();
                 _spawner.Spawned += (object sender, EventArgs args) =>
                 {
                     SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;

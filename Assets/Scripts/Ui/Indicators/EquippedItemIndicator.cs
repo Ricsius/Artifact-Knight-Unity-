@@ -11,6 +11,10 @@ namespace Assets.Scripts.Ui.Indicators
     {
         public EquipmentSystem EquipmentSystem
         {
+            get
+            {
+                return _equipmentSystem;
+            }
             set
             {
                 UnsubscribeFromEvents();
@@ -22,15 +26,14 @@ namespace Assets.Scripts.Ui.Indicators
             }
         }
         private EquipmentSystem _equipmentSystem;
+        [SerializeField]
         private Image _itemImage;
         private EquipableItem _item;
+        [SerializeField]
         private TextMeshProUGUI _cooldownText;
 
         private void Awake()
         {
-            _itemImage = transform.Find("ItemImage").GetComponent<Image>();
-            _cooldownText = transform.Find("CooldownText").GetComponent<TextMeshProUGUI>();
-
             _cooldownText.text = string.Empty;
         }
 

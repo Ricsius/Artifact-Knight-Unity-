@@ -6,7 +6,11 @@ namespace Assets.Scripts.Ui.Indicators
     public class TransformationTimeIndicator : IndicatorBase
     {
         public DeathTimer DeathTimer 
-        { 
+        {
+            get 
+            {
+                return _deathTimer;
+            }
             set 
             { 
                 _deathTimer = value;

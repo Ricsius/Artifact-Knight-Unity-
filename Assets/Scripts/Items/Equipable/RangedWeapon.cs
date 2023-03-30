@@ -10,7 +10,7 @@ namespace Assets.Scripts.Items.Equipable
         protected override void Awake()
         {
             base.Awake();
-            _spawner = transform.Find("Shooter").GetComponent<SpawnerBase>();
+            _spawner = GetComponentInChildren<SpawnerBase>();
         }
 
         protected override void Effect()

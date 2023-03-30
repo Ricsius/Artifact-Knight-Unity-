@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Controllers;
 using Assets.Scripts.Controllers.ControllerStates.MovementStates;
 using Assets.Scripts.Detectors;
+using Assets.Scripts.Environment.Checkpoint;
 using Assets.Scripts.Spawners;
 using Assets.Scripts.Timers;
 using Assets.Scripts.Ui.Indicators;
@@ -61,6 +62,7 @@ namespace Assets.Scripts.Items.Equipable
                 playerController.JumpForce = jumpForce;
 
                 transformation.AddComponent<PlayerTransformationIndicatorTarget>();
+                transformation.AddComponent<CheckpointManagerTarget>();
             }
 
             deathTimer.StartTimer();

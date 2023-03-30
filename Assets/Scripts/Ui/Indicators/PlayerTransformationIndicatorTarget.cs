@@ -29,8 +29,11 @@ namespace Assets.Scripts.Ui.Indicators
         {
             base.OnDisable();
 
-            _playerTransformationTimeIndicator.Hide();
-            _playerTransformationTimeIndicator.DeathTimer = null;
+            if (_playerTransformationTimeIndicator.DeathTimer == _deathTimer)
+            {
+                _playerTransformationTimeIndicator.Hide();
+                _playerTransformationTimeIndicator.DeathTimer = null;
+            }
         }
     }
 }

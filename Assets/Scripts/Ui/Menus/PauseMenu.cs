@@ -1,31 +1,29 @@
-
+using Assets.Scripts.Environment;
+using Assets.Scripts.Environment.Checkpoint;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Ui.Menus
 {
     public class PauseMenu : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject _buttons;
+        [SerializeField]
         private CheckpointManager _checkpointManager;
-        private bool _isHidden;
+        private SceneLoader _sceneLoader;
 
-        protected virtual void Awake() 
+        protected virtual void Awake()
         {
-            _checkpointManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
-        }
-
-        protected virtual void Start()
-        {
-            Hide();
+            _sceneLoader = GetComponent<SceneLoader>();
         }
 
         protected virtual void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (_isHidden)
+                if (_buttons.activeSelf)
                 {
-                    Hide();
+                    Resume();
                 }
                 else
                 {
@@ -34,38 +32,30 @@ namespace Assets.Scripts.Ui.Menus
             }
         }
 
-        public void Hide()
+        public void Resume()
         {
             Time.timeScale = 1f;
 
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
-
-            _isHidden = false;
+            _buttons.SetActive(false);
         }
 
         public void PutPlayerToLastCheckpoint()
         {
             _checkpointManager.PlacePlayerToTheLastCheckpoint();
+
+            Resume();
         }
 
         public void ExitToMainMenu()
         {
-            SceneManager.LoadScene(0);
+            _sceneLoader.LoadMainMenu();
         }
 
         private void Pause()
         {
             Time.timeScale = 0f;
 
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(true);
-            }
-
-            _isHidden = true;
+            _buttons.SetActive(true);
         }
     }
 }

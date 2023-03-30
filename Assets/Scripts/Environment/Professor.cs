@@ -1,7 +1,8 @@
 ﻿using Assets.Scripts.Items;
 using Assets.Scripts.Systems.Equipment;
+using Assets.Scripts.Systems.Score;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 namespace Assets.Scripts.Environment
 {
@@ -9,10 +10,12 @@ namespace Assets.Scripts.Environment
     {
         [field: SerializeField]
         public ItemBase RequiredItem { get; private set; }
+        private SceneLoader _sceneLoader;
 
         protected virtual void Awake()
         {
             tag = "Professor";
+            _sceneLoader = GetComponent<SceneLoader>();
         }
 
         public void CheckEquipment(EquipmentSystem equipment)
@@ -21,13 +24,10 @@ namespace Assets.Scripts.Environment
 
             if (hasRequiredItem)
             {
-                int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-                int index = SceneManager.sceneCount > nextIndex ? nextIndex : 0;
+                ScoreSystem score = equipment.GetComponent<ScoreSystem>();
 
-                //ToDo: Score summary board.
-                //ToDo: Loading screen for the levels.
-
-                SceneManager.LoadScene(index);
+                _sceneLoader.LoadNextScene(score);
+                
             }
             else
             {

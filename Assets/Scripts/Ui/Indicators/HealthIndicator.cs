@@ -10,6 +10,10 @@ namespace Assets.Scripts.Ui.Indicators
         public GameObject HealthIcon { get; private set; }
         public HealthSystem HealthSystem
         {
+            get
+            {
+                return _healthSysyem;
+            }
             set
             {
                 UnsubscribeFromEvents();

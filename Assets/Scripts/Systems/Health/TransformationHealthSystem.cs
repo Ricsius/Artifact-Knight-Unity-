@@ -18,9 +18,9 @@ namespace Assets.Scripts.Systems.Health
 
             originalForm.transform.parent = null;
 
-            base.Die();
-
             originalForm.SetActive(true);
+
+            Destroy(gameObject);
         }
     }
 }

@@ -4,7 +4,7 @@ using Assets.Scripts.Spawners;
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Environment
+namespace Assets.Scripts.Environment.Checkpoint
 {
     public class Checkpoint : MonoBehaviour
     {

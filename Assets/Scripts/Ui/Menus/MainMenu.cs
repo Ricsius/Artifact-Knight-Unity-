@@ -1,16 +1,21 @@
 ﻿
+using Assets.Scripts.Environment;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Ui.Menus
 {
     public class MainMenu : MonoBehaviour
     {
+        SceneLoader _sceneLoader;
+
+        protected virtual void Awake()
+        {
+            _sceneLoader = GetComponent<SceneLoader>();
+        }
+
         public void LoadFirstLevel()
         {
-            int index = SceneManager.GetActiveScene().buildIndex + 1;
-
-            SceneManager.LoadScene(index);
+            _sceneLoader.LoadNextScene();
         }
 
         public void Quit()
