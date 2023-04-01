@@ -1873,6 +1873,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4688363125146883224, guid: 6d123111c19850c499e4769a19979366, type: 3}
+      propertyPath: <StartingMovementState>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4688363125146883225, guid: 6d123111c19850c499e4769a19979366, type: 3}
       propertyPath: _preparedItems.Array.size
       value: 1
@@ -1887,7 +1891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4688363125789352214, guid: 6d123111c19850c499e4769a19979366, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.98
+      value: -4.27
       objectReference: {fileID: 0}
     - target: {fileID: 4688363125789352214, guid: 6d123111c19850c499e4769a19979366, type: 3}
       propertyPath: m_LocalPosition.y

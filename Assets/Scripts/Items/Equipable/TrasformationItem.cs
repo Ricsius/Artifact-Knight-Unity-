@@ -55,7 +55,7 @@ namespace Assets.Scripts.Items.Equipable
                 float jumpForce = transformationController.JumpForce;
 
                 Destroy(transformationController);
-                //ToDo: Fix Dragon warnings
+
                 PlayerController playerController = transformation.AddComponent<PlayerController>();
 
                 playerController.MovementSpeed = speed;

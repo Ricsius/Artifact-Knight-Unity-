@@ -4,7 +4,6 @@ using Assets.Scripts.Detectors;
 using Assets.Scripts.Environment;
 using Assets.Scripts.Items.Key;
 using Assets.Scripts.Systems.Equipment;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -15,6 +14,7 @@ namespace Assets.Scripts.Controllers
         private Transform _cameraTransform;
         private EquipmentSystem _equipment;
         private ItemCollector _itemCollector;
+        private LadderDetector _ladderDetector;
         private DoorDetector _doorDetector;
         private ProfessorDetector _professorDetector;
         private const float _cameraYOffset = 1.5f;
@@ -36,6 +36,7 @@ namespace Assets.Scripts.Controllers
             _cameraTransform = GameObject.Find("MainCamera").transform;
             _equipment = GetComponent<EquipmentSystem>();
             _itemCollector = GetComponent<ItemCollector>();
+            _ladderDetector = GetComponent<LadderDetector>();
             _doorDetector = GetComponent<DoorDetector>();
             _professorDetector = GetComponent<ProfessorDetector>();
 
@@ -128,7 +129,7 @@ namespace Assets.Scripts.Controllers
         {
             _itemCollector.CollectItem();
 
-            if (_ladderCheck)
+            if (_ladderDetector.Detect().Any())
             {
                 _movementStateManager.TrySetCurrentMovementState(ControllerMovementStateType.OnLadder);
             }

@@ -16,7 +16,7 @@ namespace Assets.Scripts.Environment.Checkpoint
         {
             _checkpointManager.Player = gameObject;
         }
-        //ToDo: Fix Indicator targets
+
         protected virtual void OnDisable()
         {
             if (_checkpointManager.Player == gameObject)
