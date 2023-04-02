@@ -17,7 +17,7 @@ namespace Assets.Scripts.Environment.Checkpoint
             _checkpointManager.Player = gameObject;
         }
 
-        protected virtual void OnDisable()
+        protected virtual void OnDestroy()
         {
             if (_checkpointManager.Player == gameObject)
             {

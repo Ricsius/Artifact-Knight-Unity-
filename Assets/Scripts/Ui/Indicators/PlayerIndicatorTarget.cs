@@ -31,7 +31,7 @@ namespace Assets.Scripts.Ui.Indicators
             _playerScoreIndicator.ScoreSystem= _scoreSystem;
         }
 
-        protected virtual void OnDisable()
+        protected virtual void OnDestroy()
         {
             if (_playerHealthIndicator.HealthSystem == _healthSystem)
             {

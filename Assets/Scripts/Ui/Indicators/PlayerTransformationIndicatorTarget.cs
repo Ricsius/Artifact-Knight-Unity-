@@ -25,9 +25,9 @@ namespace Assets.Scripts.Ui.Indicators
             _playerTransformationTimeIndicator.DeathTimer = _deathTimer;
         }
 
-        protected override void OnDisable()
+        protected override void OnDestroy()
         {
-            base.OnDisable();
+            base.OnDestroy();
 
             if (_playerTransformationTimeIndicator.DeathTimer == _deathTimer)
             {
