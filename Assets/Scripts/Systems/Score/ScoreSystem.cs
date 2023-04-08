@@ -38,7 +38,7 @@ namespace Assets.Scripts.Systems.Score
             ScoreEntry entry = new ScoreEntry(item.name, item.ScoreValue);
 
             _entries.Add(entry);
-
+            //ToDo: Fix this!
             ScoreChanged?.Invoke(this, new ScoreChangeEventArgs(ScoreSum));
         }
     }

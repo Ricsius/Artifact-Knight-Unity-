@@ -19,6 +19,7 @@ namespace Assets.Scripts.Items.Equipable
 
         public override void OnAddedToEquipment(GameObject newOwner)
         {
+            base.OnAddedToEquipment(newOwner);
             _hitBox.HealthEffect = _healthEfect;
         }
     }

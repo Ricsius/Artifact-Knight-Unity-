@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxHealthPoints>k__BackingField: 1
   <DisableGameObjectOnDeath>k__BackingField: 0
-  <DeathEffect>k__BackingField: {fileID: 1698094724490442660, guid: fd45f096475e9ca48bf8112874ddb0b6, type: 3}
+  <DeathEffect>k__BackingField: {fileID: 5601921287752947117, guid: fd45f096475e9ca48bf8112874ddb0b6, type: 3}
 --- !u!114 &7382005758266507899
 MonoBehaviour:
   m_ObjectHideFlags: 0

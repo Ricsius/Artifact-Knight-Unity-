@@ -1,24 +1,24 @@
-﻿using Assets.Scripts.Timers;
+﻿using Assets.Scripts.Systems.Health;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Ui.Indicators
 {
     public class TransformationTimeIndicator : IndicatorBase
     {
-        public DeathTimer DeathTimer 
+        public TransformationHealthSystem TransformationHealthSystem 
         {
             get 
             {
-                return _deathTimer;
+                return _transformationHealthSystem;
             }
             set 
-            { 
-                _deathTimer = value;
+            {
+                _transformationHealthSystem = value;
 
                 ResetIndicator();
             } 
         }
-        private DeathTimer _deathTimer;
+        private TransformationHealthSystem _transformationHealthSystem;
         private Slider _slider;
 
         protected virtual void Awake() 
@@ -33,9 +33,9 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected virtual void Update()
         {
-            if (_deathTimer != null)
+            if (_transformationHealthSystem != null)
             {
-                _slider.value = _deathTimer.TimeTillDeath / _deathTimer.DeathTime;
+                _slider.value = _transformationHealthSystem.TimeTillTurningBack / _transformationHealthSystem.TransformationDuration;
             }
         }
 

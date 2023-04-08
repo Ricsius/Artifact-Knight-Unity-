@@ -12,36 +12,36 @@ namespace Assets.Scripts.Ui.Indicators
         {
             get
             {
-                return _healthSysyem;
+                return _healthSystem;
             }
             set
             {
                 UnsubscribeFromEvents();
 
-                _healthSysyem = value;
+                _healthSystem = value;
 
                 SubscribeToEvents();
                 ResetIndicator();
             }
         }
 
-        private HealthSystem _healthSysyem;
+        private HealthSystem _healthSystem;
 
         protected override void SubscribeToEvents()
         {
-            if (_healthSysyem != null)
+            if (_healthSystem != null)
             {
-                _healthSysyem.Healed += UpdateHealthIndicator;
-                _healthSysyem.TookDamage += UpdateHealthIndicator;
+                _healthSystem.Healed += UpdateHealthIndicator;
+                _healthSystem.TookDamage += UpdateHealthIndicator;
             }
         }
 
         protected override void UnsubscribeFromEvents()
         {
-            if (_healthSysyem != null)
+            if (_healthSystem != null)
             {
-                _healthSysyem.Healed -= UpdateHealthIndicator;
-                _healthSysyem.TookDamage -= UpdateHealthIndicator;
+                _healthSystem.Healed -= UpdateHealthIndicator;
+                _healthSystem.TookDamage -= UpdateHealthIndicator;
             }
         }
 
@@ -63,10 +63,10 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected override void ResetIndicator()
         {
-            if (_healthSysyem != null)
+            if (_healthSystem != null)
             {
                 RemoveHealthIcons(transform.childCount);
-                AddHealthIcons(_healthSysyem.CurrentHealthPoints);
+                AddHealthIcons(_healthSystem.CurrentHealthPoints);
             }
         }
 

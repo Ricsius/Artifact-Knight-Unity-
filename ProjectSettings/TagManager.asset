@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - Door
   - Professor
+  - Mob
   layers:
   - Default
   - TransparentFX

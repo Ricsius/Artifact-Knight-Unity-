@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbff3da1232b1340a6d30031c1e4175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SpawnEffect>k__BackingField: {fileID: 1516488682768512640, guid: 13eedf9205191b14fb45e0efdfa76fd6, type: 3}
+  <SpawnEffect>k__BackingField: {fileID: -6376393669826577032, guid: 13eedf9205191b14fb45e0efdfa76fd6, type: 3}
   <ObjectToSpawn>k__BackingField: {fileID: 5437424641465131687, guid: f34bd99e85c57184795dd8725b64a6f9, type: 3}
 --- !u!95 &-7767278035967041444
 Animator:

@@ -2,6 +2,7 @@
 using Assets.Scripts.Controllers.ControllerStates.MovementStates;
 using Assets.Scripts.Detectors;
 using Assets.Scripts.Environment;
+using Assets.Scripts.Items;
 using Assets.Scripts.Items.Key;
 using Assets.Scripts.Systems.Equipment;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Controllers
     {
         private Transform _cameraTransform;
         private EquipmentSystem _equipment;
-        private ItemCollector _itemCollector;
+        private ItemDetector _itemDetector;
         private LadderDetector _ladderDetector;
         private DoorDetector _doorDetector;
         private ProfessorDetector _professorDetector;
@@ -35,7 +36,7 @@ namespace Assets.Scripts.Controllers
 
             _cameraTransform = GameObject.Find("MainCamera").transform;
             _equipment = GetComponent<EquipmentSystem>();
-            _itemCollector = GetComponent<ItemCollector>();
+            _itemDetector = GetComponent<ItemDetector>();
             _ladderDetector = GetComponent<LadderDetector>();
             _doorDetector = GetComponent<DoorDetector>();
             _professorDetector = GetComponent<ProfessorDetector>();
@@ -127,14 +128,19 @@ namespace Assets.Scripts.Controllers
 
         private void Interact()
         {
-            _itemCollector.CollectItem();
+            ItemBase item = _itemDetector?.Detect();
 
-            if (_ladderDetector.Detect().Any())
+            if (item != null)
+            {
+                _equipment.AddItem(item);
+            }
+
+            if (_ladderDetector != null && _ladderDetector.Detect().Any())
             {
                 _movementStateManager.TrySetCurrentMovementState(ControllerMovementStateType.OnLadder);
             }
 
-            Door door = _doorDetector.Detect();
+            Door door = _doorDetector?.Detect();
 
             if (door != null)
             {
@@ -146,7 +152,7 @@ namespace Assets.Scripts.Controllers
                 }
             }
 
-            Professor professor = _professorDetector.Detect();
+            Professor professor = _professorDetector?.Detect();
 
             if (professor != null)
             {

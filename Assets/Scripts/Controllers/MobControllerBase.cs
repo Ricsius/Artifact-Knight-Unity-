@@ -21,6 +21,8 @@ namespace Assets.Scripts.Controllers
             _behaviorStateManager = new ControllerBehaviourStateManager(gameObject, _movementStateManager);
 
             _behaviorStateManager.SightRange = SightRange;
+
+            tag = "Mob";
         }
 
         protected override void Start()

@@ -34,5 +34,10 @@ namespace Assets.Scripts.Detectors
         {
             return gameObject.tag.Equals("Professor");
         }
+
+        public static bool IsMob(GameObject gameObject)
+        {
+            return gameObject.tag.Equals("Mob");
+        }
     }
 }

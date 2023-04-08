@@ -1,3 +1,4 @@
+
 using Assets.Scripts.Spawners;
 using System;
 using UnityEngine;
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Projectiles
         {
             SpawnedEventArgs spawmedArgs = args as SpawnedEventArgs;
             GameObject projectile = spawmedArgs.SpawnedObject;
+           
             Shoot(projectile);
         }
     }

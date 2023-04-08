@@ -1,4 +1,5 @@
 ﻿
+using Assets.Scripts.Detectors;
 using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable
@@ -9,13 +10,15 @@ namespace Assets.Scripts.Items.Equipable
         public float Cooldown { get; private set; }
         public float TimeTillCooldown { get; private set; }
         public bool IsOnCooldown => TimeTillCooldown > 0;
+        public GameObject Owner { get; private set; }
+        protected bool _isOwnedByPlayer;
 
         protected override void Awake()
         {
             base.Awake();
 
             Type = ItemType.Equipable;
-            TimeTillCooldown = Cooldown;
+            TimeTillCooldown = 0;
         }
 
         protected virtual void Update()
@@ -24,6 +27,12 @@ namespace Assets.Scripts.Items.Equipable
             {
                 TimeTillCooldown -= Time.deltaTime;
             }
+        }
+
+        public override void OnAddedToEquipment(GameObject newOwner)
+        {
+            Owner = newOwner;
+            _isOwnedByPlayer = SpecialGameObjectRecognition.IsPlayer(Owner);
         }
 
         public void Use()

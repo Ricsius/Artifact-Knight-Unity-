@@ -1,4 +1,5 @@
 using Assets.Scripts.Detectors;
+using Assets.Scripts.Projectiles;
 using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Items.Equipable
 
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _originalSprite = _spriteRenderer.sprite;
+            _spawner.ObjectToSpawn = null;
         }
 
         protected override void Effect()

@@ -1,4 +1,5 @@
 
+using Assets.Scripts.Effects;
 using System;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Spawners
     public class SpawnerBase : MonoBehaviour
     {
         [field: SerializeField]
-        public GameObject SpawnEffect { get; set; }
+        public Effect SpawnEffect { get; set; }
         [field: SerializeField]
         public GameObject ObjectToSpawn { get; set; }
         public event EventHandler Spawned;
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Spawners
         {
             if (SpawnEffect != null)
             {
-                GameObject spawnedEffect = Instantiate(SpawnEffect, transform.position, transform.rotation);
+                GameObject spawnedEffect = Instantiate(SpawnEffect.gameObject, transform.position, transform.rotation);
                 spawnedEffect.transform.localScale = transform.localScale;
             }
 

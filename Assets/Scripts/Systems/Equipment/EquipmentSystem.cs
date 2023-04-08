@@ -46,8 +46,7 @@ namespace Assets.Scripts.Systems.Equipment
         {
             foreach (ItemBase item in _preparedItems)
             {
-                GameObject clone = Instantiate(item.gameObject);
-                ItemBase cloneItem = clone.GetComponent<ItemBase>();
+                ItemBase cloneItem = Instantiate(item);
 
                 AddItem(cloneItem);
             }

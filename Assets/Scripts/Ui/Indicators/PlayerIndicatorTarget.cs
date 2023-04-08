@@ -24,7 +24,7 @@ namespace Assets.Scripts.Ui.Indicators
             _scoreSystem = GetComponent<ScoreSystem>();
         }
 
-        protected virtual void OnEnable()
+        protected virtual void Start()
         {
             _playerHealthIndicator.HealthSystem = _healthSystem;
             _playerEquippedItemIndicator.EquipmentSystem = _equipmentSystem;

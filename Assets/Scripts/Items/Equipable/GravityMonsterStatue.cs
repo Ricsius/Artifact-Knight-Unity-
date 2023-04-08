@@ -10,7 +10,9 @@ namespace Assets.Scripts.Items.Equipable
 
         public override void OnAddedToEquipment(GameObject newOwner)
         {
-            _ownerTransform= newOwner.transform;
+            base.OnAddedToEquipment(newOwner);
+
+            _ownerTransform = newOwner.transform;
             _ownerRigidbody = newOwner.GetComponent<Rigidbody2D>();
         }
 

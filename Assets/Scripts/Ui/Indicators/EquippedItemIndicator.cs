@@ -1,3 +1,4 @@
+
 using Assets.Scripts.Items.Equipable;
 using Assets.Scripts.Systems.Equipment;
 using System;
@@ -65,29 +66,23 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected override void ResetIndicator()
         {
-            if (_equipmentSystem != null)
-            {
-                if (_equipmentSystem.EquipedItem != null)
-                {
-                    _itemImage.sprite = _equipmentSystem.EquipedItem.GetComponent<SpriteRenderer>().sprite;
-                    _itemImage.enabled = true;
-                }
-                else
-                {
-                    _itemImage.enabled = false;
-                    _itemImage.sprite = null;
-                    _cooldownText.text = string.Empty;
-                }
-            }
+            IndicateItem(_equipmentSystem?.EquipedItem);
+
+            _cooldownText.text = string.Empty;
         }
 
         private void OnNewItemEquipped(object sender, EventArgs args)
         {
             ItemEventArgs itemEquipArgs = args as ItemEventArgs;
 
-            _item = itemEquipArgs.Item as EquipableItem;
-            _itemImage.sprite = itemEquipArgs.Item.GetComponent<SpriteRenderer>().sprite;
-            _itemImage.enabled = true;
+            IndicateItem(itemEquipArgs.Item as EquipableItem);
+        }
+
+        private void IndicateItem(EquipableItem item)
+        {
+            _item = item;
+            _itemImage.sprite = _item?.GetComponent<SpriteRenderer>().sprite;
+            _itemImage.enabled = item != null;
         }
     }
 }

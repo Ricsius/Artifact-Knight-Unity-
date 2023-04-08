@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Timers;
+﻿using Assets.Scripts.Systems.Health;
 using UnityEngine;
 
 namespace Assets.Scripts.Ui.Indicators
@@ -6,33 +6,33 @@ namespace Assets.Scripts.Ui.Indicators
     public class PlayerTransformationIndicatorTarget : PlayerIndicatorTarget
     {
         private TransformationTimeIndicator _playerTransformationTimeIndicator;
-        private DeathTimer _deathTimer;
+        private TransformationHealthSystem _transformationHealthSystem;
 
         protected override void Awake()
         {
             base.Awake();
 
             _playerTransformationTimeIndicator = GameObject.Find("PlayerTrasformationTimerIndicator").GetComponent<TransformationTimeIndicator>();
-            _deathTimer = GetComponent<DeathTimer>();
+            _transformationHealthSystem = GetComponent<TransformationHealthSystem>();
 
         }
 
-        protected override void OnEnable()
+        protected override void Start()
         {
-            base.OnEnable();
+            base.Start();
 
             _playerTransformationTimeIndicator.Show();
-            _playerTransformationTimeIndicator.DeathTimer = _deathTimer;
+            _playerTransformationTimeIndicator.TransformationHealthSystem = _transformationHealthSystem;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            if (_playerTransformationTimeIndicator.DeathTimer == _deathTimer)
+            if (_playerTransformationTimeIndicator.TransformationHealthSystem == _transformationHealthSystem)
             {
                 _playerTransformationTimeIndicator.Hide();
-                _playerTransformationTimeIndicator.DeathTimer = null;
+                _playerTransformationTimeIndicator.TransformationHealthSystem = null;
             }
         }
     }

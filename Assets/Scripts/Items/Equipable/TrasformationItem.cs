@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts.Controllers;
-using Assets.Scripts.Controllers.ControllerStates.MovementStates;
-using Assets.Scripts.Detectors;
 using Assets.Scripts.Environment.Checkpoint;
 using Assets.Scripts.Spawners;
-using Assets.Scripts.Timers;
+using Assets.Scripts.Systems.Health;
 using Assets.Scripts.Ui.Indicators;
 using System;
 using UnityEngine;
@@ -14,8 +12,6 @@ namespace Assets.Scripts.Items.Equipable
     {
         [SerializeField]
         private float _transformationDuration;
-        private GameObject _owner;
-        private bool _isOwnedByPlayer;
         private SpawnerBase _spawner;
         
 
@@ -26,35 +22,36 @@ namespace Assets.Scripts.Items.Equipable
             _spawner= GetComponent<SpawnerBase>();
             _spawner.Spawned += OnTransformationSpawned;
         }
-        public override void OnAddedToEquipment(GameObject newOwner)
-        {
-            _owner = newOwner;
-            _isOwnedByPlayer = SpecialGameObjectRecognition.IsPlayer(_owner);
-        }
 
         protected override void Effect()
         {
             _spawner.Spawn();
         }
 
-        private void OnTransformationSpawned(object sender, EventArgs args)
+        private void TransformOwnerInto(GameObject transformation)
         {
-            SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;
-            GameObject transformation = spawnedArgs.SpawnedObject;
-            DeathTimer deathTimer = transformation.AddComponent<DeathTimer>();
+            HealthSystem originalHealthSystem = transformation.GetComponent<HealthSystem>();
+            int maxHealthPoints = originalHealthSystem.MaxHealthPoints;
 
-            deathTimer.DeathTime = _transformationDuration;
+            DestroyImmediate(originalHealthSystem);
 
-            _owner.gameObject.SetActive(false);
-            _owner.transform.parent = transformation.transform;
+            TransformationHealthSystem transformationHealthSystem = transformation.AddComponent<TransformationHealthSystem>();
+
+            transformationHealthSystem.MaxHealthPoints = maxHealthPoints;
+            transformationHealthSystem.Heal(maxHealthPoints);
+            transformationHealthSystem.TransformationDuration = _transformationDuration;
 
             if (_isOwnedByPlayer)
             {
-                ControllerBase transformationController = transformation.GetComponent<ControllerBase>();
-                float speed = transformationController.MovementSpeed;
-                float jumpForce = transformationController.JumpForce;
+                PlayerIndicatorTarget playerIndicatorTarget= Owner.GetComponent<PlayerIndicatorTarget>();
+                CheckpointManagerTarget checkpointManagerTarget = Owner.GetComponent<CheckpointManagerTarget>();
+                ControllerBase originalController = transformation.GetComponent<ControllerBase>();
+                float speed = originalController.MovementSpeed;
+                float jumpForce = originalController.JumpForce;
 
-                Destroy(transformationController);
+                DestroyImmediate(playerIndicatorTarget);
+                DestroyImmediate(checkpointManagerTarget);
+                DestroyImmediate(originalController);
 
                 PlayerController playerController = transformation.AddComponent<PlayerController>();
 
@@ -65,7 +62,16 @@ namespace Assets.Scripts.Items.Equipable
                 transformation.AddComponent<CheckpointManagerTarget>();
             }
 
-            deathTimer.StartTimer();
+            Owner.gameObject.SetActive(false);
+            Owner.transform.parent = transformation.transform;
+        }
+
+        private void OnTransformationSpawned(object sender, EventArgs args)
+        {
+            SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;
+            GameObject transformation = spawnedArgs.SpawnedObject;
+
+            TransformOwnerInto(transformation);
         }
     }
 }

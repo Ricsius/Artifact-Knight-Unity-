@@ -12,7 +12,7 @@ namespace Assets.Scripts.Environment.Checkpoint
             _checkpointManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
         }
 
-        protected virtual void OnEnable()
+        protected virtual void Start()
         {
             _checkpointManager.Player = gameObject;
         }

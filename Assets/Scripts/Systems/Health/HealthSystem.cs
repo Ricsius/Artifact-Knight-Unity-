@@ -1,4 +1,5 @@
 
+using Assets.Scripts.Effects;
 using System;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Systems.Health
         public bool DisableGameObjectOnDeath { get; set; }
 
         [field: SerializeField]
-        public GameObject DeathEffect { get; set; }
+        public Effect DeathEffect { get; set; }
         public event EventHandler Healed;
         public event EventHandler TookDamage;
         public event EventHandler Death;
@@ -52,30 +53,30 @@ namespace Assets.Scripts.Systems.Health
                 CurrentHealthPoints = 0;
             }
 
+            TookDamage?.Invoke(this, new HealthChangeEventArgs(amount, true));
+
             if (CurrentHealthPoints == 0)
             {
                 Die();
             }
-
-            TookDamage?.Invoke(this, new HealthChangeEventArgs(amount, true));
         }
         protected virtual void Die()
         {
+            if (DeathEffect != null)
+            {
+                Instantiate(DeathEffect.gameObject, transform.position, transform.rotation);
+            }
+
             if (DisableGameObjectOnDeath)
             {
                 gameObject.SetActive(false);
+                Death?.Invoke(this, new EventArgs());
             }
             else
             {
+                Death?.Invoke(this, new EventArgs());
                 Destroy(gameObject);
             }
-
-            if (DeathEffect != null)
-            {
-                Instantiate(DeathEffect, transform.position, transform.rotation);
-            }
-
-            Death?.Invoke(this, new EventArgs());
         }
     }
 }
