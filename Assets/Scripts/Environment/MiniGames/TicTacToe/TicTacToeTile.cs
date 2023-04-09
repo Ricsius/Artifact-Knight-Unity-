@@ -8,7 +8,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
     public class TicTacToeTile : MonoBehaviour
     {
         [SerializeField]
-        public Vector2 Position { get; set; }
+        public Position Position { get; set; }
         public Sprite Sprite
         {
             set

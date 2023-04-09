@@ -1,65 +1,84 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 {
     public class TicTacToeGameState
     {
-        public Vector2[] UnmarkedPositions => _unmarkedPositions.ToArray();
-        private int _size;
+        public IEnumerable<Position> UnmarkedPositions => _unmarkedPositions.ToArray();
+        public IEnumerable<IEnumerable<Position>> WinningPatterns => _winningPatterns.Select(g => g.ToArray()).ToArray();
+        public int Size { get; }
         IEnumerable<int> _playerIDs;
-        private HashSet<Vector2> _unmarkedPositions;
-        private List<HashSet<Vector2>> _winningPositionGroups;
-        private Dictionary<int, HashSet<Vector2>> _markedPositions;
+        private HashSet<Position> _unmarkedPositions;
+        private HashSet<HashSet<Position>> _winningPatterns;
+        private Dictionary<int, HashSet<Position>> _markedPositions;
 
         public TicTacToeGameState(int size, IEnumerable<int> playerIDs) 
         {
-            _size = size;
+            Size = size;
             _playerIDs = playerIDs;
 
-            _unmarkedPositions = new HashSet<Vector2>();
-            _markedPositions = new Dictionary<int, HashSet<Vector2>>();
-            _winningPositionGroups = new List<HashSet<Vector2>>();
+            _unmarkedPositions = new HashSet<Position>();
+            _markedPositions = new Dictionary<int, HashSet<Position>>();
+            _winningPatterns = new HashSet<HashSet<Position>>();
 
-            for (int i = 0; i < _size; ++i)
+            for (int i = 0; i < Size; ++i)
             {
-                for (int j = 0; j < _size; ++j)
+                for (int j = 0; j < Size; ++j)
                 {
-                    _unmarkedPositions.Add(new Vector2(j, i));
+                    _unmarkedPositions.Add(new Position(j, i));
                 }
             }
 
-            for (int i = 0; i < _size; ++i)
+            for (int i = 0; i < Size; ++i)
             {
-                IEnumerable<Vector2> row = _unmarkedPositions.Where(p => p.x == i).ToArray();
-                IEnumerable<Vector2> column = _unmarkedPositions.Where(p => p.y == i).ToArray();
+                IEnumerable<Position> row = _unmarkedPositions.Where(p => p.X == i).ToArray();
+                IEnumerable<Position> column = _unmarkedPositions.Where(p => p.Y == i).ToArray();
 
-                _winningPositionGroups.Add(new HashSet<Vector2>(row));
-                _winningPositionGroups.Add(new HashSet<Vector2>(column));
+                _winningPatterns.Add(new HashSet<Position>(row));
+                _winningPatterns.Add(new HashSet<Position>(column));
             }
 
-            IEnumerable<Vector2> diagonal1 = _unmarkedPositions.Where(p => p.x == p.y).ToArray();
-            IEnumerable<Vector2> diagonal2 = _unmarkedPositions.Where(p => p.x + p.y == _size - 1).ToArray();
+            IEnumerable<Position> diagonal1 = _unmarkedPositions.Where(p => p.X == p.Y).ToArray();
+            IEnumerable<Position> diagonal2 = _unmarkedPositions.Where(p => p.X + p.Y == Size - 1).ToArray();
 
-            _winningPositionGroups.Add(new HashSet<Vector2>(diagonal1));
-            _winningPositionGroups.Add(new HashSet<Vector2>(diagonal2));
+            _winningPatterns.Add(new HashSet<Position>(diagonal1));
+            _winningPatterns.Add(new HashSet<Position>(diagonal2));
 
             foreach (int playerID in _playerIDs)
             {
-                _markedPositions[playerID] = new HashSet<Vector2>();
+                _markedPositions[playerID] = new HashSet<Position>();
             }
         }
 
-        public void PutMark(int playerID, Vector2 position)
+        public TicTacToeGameState Copy()
+        {
+            TicTacToeGameState ret = new TicTacToeGameState(Size, _playerIDs);
+
+            ret._unmarkedPositions = new HashSet<Position>(_unmarkedPositions);
+
+            foreach (int id in _playerIDs)
+            {
+                ret._markedPositions[id] = new HashSet<Position>(_markedPositions[id]);
+            }
+
+            return ret;
+        }
+
+        public void PutMark(int playerID, Position position)
         {
             _unmarkedPositions.Remove(position);
             _markedPositions[playerID].Add(position);
         }
 
+        public Position[] GetMarkedPositions(int playerID)
+        {
+            return _markedPositions[playerID].ToArray();
+        }
+
         public bool CheckWinCondition(int playerID)
         {
-            return _winningPositionGroups.Any(g => g.All(p => _markedPositions[playerID].Contains(p)));
+            return _winningPatterns.Any(g => g.All(p => _markedPositions[playerID].Contains(p)));
         }
     }
 }
