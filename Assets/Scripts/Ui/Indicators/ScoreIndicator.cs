@@ -1,62 +1,45 @@
 ﻿
 using Assets.Scripts.Systems.Score;
-using System;
 using TMPro;
-using UnityEngine;
 
 namespace Assets.Scripts.Ui.Indicators
 {
-    public class ScoreIndicator : IndicatorBase
+    public class ScoreIndicator : IndicatorBase<ScoreSystem>
     {
-        public ScoreSystem ScoreSystem
-        {
-            get
-            {
-                return _scoreSystem;
-            }
-            set
-            {
-                UnsubscribeFromEvents();
-
-                _scoreSystem = value;
-
-                SubscribeToEvents();
-                ResetIndicator();
-            }
-        }
-        [field: SerializeField]
         private TextMeshProUGUI _scoreText;
-        private ScoreSystem _scoreSystem;
+
+        protected virtual void Awake()
+        {
+            _scoreText = GetComponentInChildren<TextMeshProUGUI>();
+        }
 
         protected override void SubscribeToEvents()
         {
-            if (_scoreSystem != null)
+            if (_componentToIndicateTyped != null)
             {
-                _scoreSystem.ScoreChanged += OnScoreChange;
+                _componentToIndicateTyped.ScoreChanged += OnScoreChange;
             }
         }
 
         protected override void UnsubscribeFromEvents()
         {
-            if (_scoreSystem != null)
+            if (_componentToIndicateTyped != null)
             {
-                _scoreSystem.ScoreChanged -= OnScoreChange;
+                _componentToIndicateTyped.ScoreChanged -= OnScoreChange;
             }
         }
 
         protected override void ResetIndicator()
         {
-            if (_scoreSystem != null)
+            if (_componentToIndicateTyped != null)
             {
-                _scoreText.text = _scoreSystem.ScoreSum.ToString();
+                _scoreText.text = _componentToIndicateTyped.ScoreSum.ToString();
             }
         }
 
-        private void OnScoreChange(object sender, EventArgs args)
+        private void OnScoreChange(object sender, ScoreChangeEventArgs args)
         {
-            ScoreChangeEventArgs scoreArgs = args as ScoreChangeEventArgs;
-
-            _scoreText.text = scoreArgs.NewScore.ToString();
+            _scoreText.text = args.NewScore.ToString();
         }
     }
 }

@@ -32,10 +32,9 @@ namespace Assets.Scripts.Projectiles
             projectile.GetComponent<Rigidbody2D>().AddForce(transform.right * ShootingForce, ForceMode2D.Impulse);
         }
 
-        private void OnSpawned(object sender, EventArgs args)
+        private void OnSpawned(object sender, SpawnedEventArgs args)
         {
-            SpawnedEventArgs spawmedArgs = args as SpawnedEventArgs;
-            GameObject projectile = spawmedArgs.SpawnedObject;
+            GameObject projectile = args.SpawnedObject;
            
             Shoot(projectile);
         }

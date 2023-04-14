@@ -57,11 +57,9 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
             }
         }
 
-        private void OnBehaviorStateChangeRequest(object sender, EventArgs args)
+        private void OnBehaviorStateChangeRequest(object sender, BehaviourStaceChangeRequestEventArgs args)
         {
-            BehaviourStaceChangeRequestEventArgs stateChangeRequestChangeArgs = args as BehaviourStaceChangeRequestEventArgs;
-
-            TrySetCurrentBehaviorState(stateChangeRequestChangeArgs.BehaviourStateType);
+            TrySetCurrentBehaviorState(args.BehaviourStateType);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Assets.Scripts.Detectors;
 using Assets.Scripts.Environment.Checkpoint;
 using Assets.Scripts.Ui.Indicators;
+using Assets.Scripts.Ui.Indicators.Targets;
 using UnityEngine;
 
 namespace Assets.Scripts.Systems.Health
@@ -55,7 +56,6 @@ namespace Assets.Scripts.Systems.Health
 
             if (SpecialGameObjectRecognition.IsPlayer(originalForm))
             {
-                originalForm.AddComponent<PlayerIndicatorTarget>();
                 originalForm.AddComponent<CheckpointManagerTarget>();
             }
 

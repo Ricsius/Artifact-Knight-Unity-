@@ -1,7 +1,6 @@
 using Assets.Scripts.Environment;
 using Assets.Scripts.Environment.Checkpoint;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Ui.Menus
 {

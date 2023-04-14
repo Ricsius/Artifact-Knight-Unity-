@@ -3,22 +3,8 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Ui.Indicators
 {
-    public class TransformationTimeIndicator : IndicatorBase
+    public class TransformationTimeIndicator : IndicatorBase<TransformationHealthSystem>
     {
-        public TransformationHealthSystem TransformationHealthSystem 
-        {
-            get 
-            {
-                return _transformationHealthSystem;
-            }
-            set 
-            {
-                _transformationHealthSystem = value;
-
-                ResetIndicator();
-            } 
-        }
-        private TransformationHealthSystem _transformationHealthSystem;
         private Slider _slider;
 
         protected virtual void Awake() 
@@ -28,14 +14,13 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected virtual void Start()
         {
-            Hide();
         }
 
         protected virtual void Update()
         {
-            if (_transformationHealthSystem != null)
+            if (_componentToIndicateTyped != null)
             {
-                _slider.value = _transformationHealthSystem.TimeTillTurningBack / _transformationHealthSystem.TransformationDuration;
+                _slider.value = _componentToIndicateTyped.TimeTillTurningBack / _componentToIndicateTyped.TransformationDuration;
             }
         }
 
@@ -52,22 +37,6 @@ namespace Assets.Scripts.Ui.Indicators
         protected override void UnsubscribeFromEvents()
         {
             
-        }
-
-        public void Show()
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(true);
-            }
-        }
-
-        public void Hide()
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
         }
     }
 }

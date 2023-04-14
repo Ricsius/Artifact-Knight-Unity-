@@ -16,8 +16,8 @@ namespace Assets.Scripts.Systems.Health
 
         [field: SerializeField]
         public Effect DeathEffect { get; set; }
-        public event EventHandler Healed;
-        public event EventHandler TookDamage;
+        public event EventHandler<HealthChangeEventArgs> Healed;
+        public event EventHandler<HealthChangeEventArgs> TookDamage;
         public event EventHandler Death;
 
 

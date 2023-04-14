@@ -12,7 +12,7 @@ namespace Assets.Scripts.Systems.Score
     {
         public IEnumerable<ScoreEntry> Entries => _entries;
         public int ScoreSum => _entries.Sum(e => e.Score);
-        public event EventHandler ScoreChanged;
+        public event EventHandler<ScoreChangeEventArgs> ScoreChanged;
         private EquipmentSystem _equipment;
         private List<ScoreEntry> _entries;
         protected virtual void Awake()
@@ -24,22 +24,35 @@ namespace Assets.Scripts.Systems.Score
         protected virtual void OnEnable()
         {
             _equipment.NewItemAdded += OnNewItemAdded;
+            _equipment.ItemRemoved += OnItemRemoved;
         }
 
         protected virtual void OnDisable()
         {
             _equipment.NewItemAdded -= OnNewItemAdded;
+            _equipment.ItemRemoved -= OnItemRemoved;
         }
 
-        private void OnNewItemAdded(object sender, EventArgs args)
+        private void OnNewItemAdded(object sender, ItemEventArgs args)
         {
-            ItemEventArgs itemArgs = args as ItemEventArgs;
-            ItemBase item= itemArgs.Item;
+            ItemBase item= args.Item;
             ScoreEntry entry = new ScoreEntry(item.name, item.ScoreValue);
 
             _entries.Add(entry);
-            //ToDo: Fix this!
+
             ScoreChanged?.Invoke(this, new ScoreChangeEventArgs(ScoreSum));
+        }
+
+        private void OnItemRemoved(object sender, ItemEventArgs args)
+        {
+            ItemBase item = args.Item;
+            ScoreEntry entry = _entries.FirstOrDefault(e => e.Name == item.name && e.Score == item.ScoreValue);
+            bool removed = _entries.Remove(entry);
+
+            if (removed)
+            {
+                ScoreChanged?.Invoke(this, new ScoreChangeEventArgs(ScoreSum));
+            }
         }
     }
 }

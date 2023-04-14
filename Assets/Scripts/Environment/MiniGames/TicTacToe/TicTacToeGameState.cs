@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 {
@@ -63,6 +65,17 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
             }
 
             return ret;
+        }
+
+        public void Reset()
+        {
+            foreach (int playerID in _playerIDs)
+            {
+                HashSet<Position> markedPositions = _markedPositions[playerID];
+
+                _unmarkedPositions.AddRange(markedPositions);
+                markedPositions.Clear();
+            }
         }
 
         public void PutMark(int playerID, Position position)

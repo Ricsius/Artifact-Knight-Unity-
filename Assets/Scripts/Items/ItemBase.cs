@@ -16,6 +16,7 @@ namespace Assets.Scripts.Items
 
         public virtual void OnAddedToEquipment(GameObject newOwner)
         {
+            tag= "Owned_Item";
         }
     }
 }

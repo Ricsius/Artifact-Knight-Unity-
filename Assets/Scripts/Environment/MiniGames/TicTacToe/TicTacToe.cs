@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-//ToDo: Fix turn handling bug
 namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 {
     public class TicTacToe : MonoBehaviour
     {
+        //ToDo: Players settable in editor, background change on game end
         [SerializeField]
         private Transform _rows;
         [SerializeField]
@@ -17,6 +17,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         private ItemBase _reward;
         [SerializeField]
         private float _restartDelay;
+        private int _gameSize;
         private float _timeTillRestart;
         private bool _isRestarting;
         private TicTacToeTile[,] _tiles;
@@ -25,38 +26,38 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         private TicTacToeGameState _gameState;
         private TicTacToeAI _ai;
         private int[] _playerIDs;
-        private int _currePlayerIndex;
+        private int _startingPlayerIndex;
+        private int _currentPlayerIndex;
 
         protected virtual void Awake()
         {
-            int gameSize = _rows.childCount;
-
-            _isRestarting = false;
-            _tiles = new TicTacToeTile[gameSize, gameSize];
-            _mainGamePlayerID = 0; 
+            _gameSize = _rows.childCount;
+            _mainGamePlayerID = 0;
             _aIPlayerID = 1;
             _playerIDs = new int[] { _mainGamePlayerID, _aIPlayerID };
-            _currePlayerIndex = 0;
-            _gameState = new TicTacToeGameState(gameSize, _playerIDs);
+            _gameState = new TicTacToeGameState(_gameSize, _playerIDs);
             _ai = new TicTacToeAI(_aIPlayerID, _mainGamePlayerID, _gameState);
+            _tiles = new TicTacToeTile[_gameSize, _gameSize];
+            _startingPlayerIndex = -1;
 
-            for (int i = 0; i < gameSize; ++i)
+            for (int i = 0; i < _gameSize; ++i)
             {
                 Transform row = _rows.GetChild(i);
 
-                for (int j = 0; j < gameSize; ++j)
+                for (int j = 0; j < _gameSize; ++j)
                 {
                     TicTacToeTile tile = row.GetChild(j).GetComponent<TicTacToeTile>();
 
                     tile.Position = new Position(j, i);
                     tile.Sprite = null;
-                    tile.MarkRequested += OnTileMarkRequest;
 
                     _tiles[j, i] = tile;
                 }
             }
 
             _reward.gameObject.SetActive(false);
+
+            ResetGame();
         }
 
         protected virtual void Update()
@@ -68,21 +69,62 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 
             if (_isRestarting && _timeTillRestart <= 0)
             {
-                Awake();
+                ResetGame();
             }
+        }
+
+        private void ResetGame()
+        {
+            List<Position> markedPositions = new List<Position>();
+
+            markedPositions.AddRange(_gameState.GetMarkedPositions(_mainGamePlayerID));
+            markedPositions.AddRange(_gameState.GetMarkedPositions(_aIPlayerID));
+
+            foreach (Position position in markedPositions)
+            {
+                _tiles[position.X, position.Y].Sprite = null;
+            }
+
+            foreach (Position position in _gameState.UnmarkedPositions)
+            {
+                _tiles[position.X, position.Y].MarkRequested -= OnTileMarkRequest;
+            }
+
+            _gameState.Reset();
+
+            _isRestarting = false;
+
+            foreach (Position position in _gameState.UnmarkedPositions)
+            {
+                _tiles[position.X, position.Y].MarkRequested += OnTileMarkRequest;
+            }
+
+            _startingPlayerIndex = (_startingPlayerIndex + 1) % _playerIDs.Length;
+            _currentPlayerIndex = _startingPlayerIndex;
+
+            if (_playerIDs[_currentPlayerIndex] == _aIPlayerID)
+            {
+                AIAction();
+            }
+        }
+
+        private void AIAction()
+        {
+            Position nextMove = _ai.CalculateNextMove();
+
+            _tiles[nextMove.X, nextMove.Y].MarkRequest(_playerIDs[_currentPlayerIndex]);
         }
 
         private void OnTileMarkRequest(object sender, TileMarkEventArgs args)
         {
             int playerID = args.PlayerID;
 
-            if (_playerIDs[_currePlayerIndex] != playerID)
+            if (_playerIDs[_currentPlayerIndex] != playerID)
             {
                 return;
             }
 
             TicTacToeTile tile = sender as TicTacToeTile;
-            
 
             _gameState.PutMark(playerID, tile.Position);
 
@@ -105,13 +147,11 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
                 return;
             }
 
-            _currePlayerIndex = (_currePlayerIndex + 1) % _playerIDs.Length;
+            _currentPlayerIndex = (_currentPlayerIndex + 1) % _playerIDs.Length;
 
-            if (_currePlayerIndex == _aIPlayerID && _gameState.UnmarkedPositions.Any())
+            if (_playerIDs[_currentPlayerIndex] == _aIPlayerID && _gameState.UnmarkedPositions.Any())
             {
-                Position nextMove = _ai.CalculateNextMove();
-
-                _tiles[nextMove.X, nextMove.Y].MarkRequest(_aIPlayerID);
+                AIAction();
             }
         }
     }

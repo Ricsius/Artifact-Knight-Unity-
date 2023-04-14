@@ -14,15 +14,12 @@ namespace Assets.Scripts.Environment.Checkpoint
 
         protected virtual void Start()
         {
-            _checkpointManager.Player = gameObject;
+            _checkpointManager.JoinTargets(gameObject);
         }
 
         protected virtual void OnDestroy()
         {
-            if (_checkpointManager.Player == gameObject)
-            {
-                _checkpointManager.Player = null;
-            }
+            _checkpointManager.LeaveTargets(gameObject);
         }
     }
 }

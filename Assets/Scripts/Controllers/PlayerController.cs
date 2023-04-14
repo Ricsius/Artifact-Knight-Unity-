@@ -18,23 +18,22 @@ namespace Assets.Scripts.Controllers
         private LadderDetector _ladderDetector;
         private DoorDetector _doorDetector;
         private ProfessorDetector _professorDetector;
-        private const float _cameraYOffset = 1.5f;
-        private KeyCode _moveRightKey = KeyCode.D;
-        private KeyCode _moveLeftKey = KeyCode.A;
-        private KeyCode _moveUpKey = KeyCode.W;
-        private KeyCode _moveDownKey = KeyCode.S;
-        private KeyCode _jumpKey = KeyCode.Space;
-        private KeyCode _useItemKey = KeyCode.E;
-        private KeyCode _interactionKey = KeyCode.F;
-        private KeyCode _nextItemKey = KeyCode.Q;
+        private float _cameraYOffset;
+        private KeyCode _moveRightKey;
+        private KeyCode _moveLeftKey;
+        private KeyCode _moveUpKey;
+        private KeyCode _moveDownKey;
+        private KeyCode _jumpKey;
+        private KeyCode _useItemKey;
+        private KeyCode _interactionKey;
+        private KeyCode _nextItemKey;
 
         protected override void Awake()
         {
             base.Awake();
 
             tag = "Player";
-
-            _cameraTransform = GameObject.Find("MainCamera").transform;
+            _cameraTransform = GameObject.Find("Main Camera").transform;
             _equipment = GetComponent<EquipmentSystem>();
             _itemDetector = GetComponent<ItemDetector>();
             _ladderDetector = GetComponent<LadderDetector>();
@@ -44,6 +43,16 @@ namespace Assets.Scripts.Controllers
             _movementStateManager.Manage<DefaultGroundedMovementState>();
             _movementStateManager.Manage<DefaultInAirMovementState>();
             _movementStateManager.Manage<DefaultOnLadderMovementState>();
+
+            _cameraYOffset = 1.5f;
+            _moveRightKey = KeyCode.D;
+            _moveLeftKey = KeyCode.A;
+            _moveUpKey = KeyCode.W;
+            _moveDownKey = KeyCode.S;
+            _jumpKey = KeyCode.Space;
+            _useItemKey = KeyCode.E;
+            _interactionKey = KeyCode.F;
+            _nextItemKey = KeyCode.Q;
         }
         protected override void Update()
         {

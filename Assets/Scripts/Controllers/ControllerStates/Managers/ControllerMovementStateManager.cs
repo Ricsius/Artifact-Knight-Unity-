@@ -94,11 +94,9 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
             }
         }
 
-        private void OnAnimationParameterChangeRequest(object sender, EventArgs args)
+        private void OnAnimationParameterChangeRequest(object sender, AnimationParameterChangeRequestEventArgs args)
         {
-            AnimationParameterChangeRequestEventArgs animationParameterChangeRequestChangeArgs = args as AnimationParameterChangeRequestEventArgs;
-
-            TrySetAnimationParameter(animationParameterChangeRequestChangeArgs.ParameterName);
+            TrySetAnimationParameter(args.ParameterName);
         }
 
         private bool TrySetAnimationParameter(string parameterName)

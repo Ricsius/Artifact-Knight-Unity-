@@ -4,13 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ice
   - Item
   - Ladder
   - Projectile
   - Door
   - Professor
   - Mob
+  - Owned_Item
   layers:
   - Default
   - TransparentFX

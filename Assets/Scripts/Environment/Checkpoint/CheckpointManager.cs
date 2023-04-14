@@ -2,6 +2,7 @@
 using Assets.Scripts.Systems.Health;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Environment.Checkpoint
@@ -10,51 +11,55 @@ namespace Assets.Scripts.Environment.Checkpoint
     {
         [field: SerializeField]
         public List<Checkpoint> Checkpoints { get; private set; }
-        public GameObject Player 
-        {
-            get
-            {
-                return _player;
-            }
-            set 
-            {
-                if (_player != null)
-                {
-                    _playerHealthSystem.Death -= OnPlayerDeath;
-                }
-
-                _player = value;
-                _playerHealthSystem = _player?.GetComponent<HealthSystem>();
-
-                if (_player != null)
-                {
-                    _playerHealthSystem.Death += OnPlayerDeath;
-
-                    if (_lastActiveChackpointPosition == default(Vector2))
-                    {
-                        _lastActiveChackpointPosition = _player.transform.position;
-                    }
-                }
-            }
-        }
-        private HealthSystem _playerHealthSystem;
+        private LinkedList<GameObject> _targets;
+        private GameObject _currentTarget;
+        private HealthSystem _targetHealthSystem;
         private Vector2 _lastActiveChackpointPosition;
-        private GameObject _player;
+
         protected void Awake()
         {
+            _targets = new LinkedList<GameObject>();
+
             foreach (Checkpoint checkpoint in Checkpoints)
             {
                 checkpoint.Activated += OnActivated;
             }
         }
 
+        public void JoinTargets(GameObject gameObject)
+        {
+            _targets.AddLast(gameObject);
+
+            if (_targets.Count == 1)
+            {
+                _currentTarget = gameObject;
+                SetUpCurrentTarget();
+            }
+        }
+
+        public void LeaveTargets(GameObject gameObject)
+        {
+            _targets.Remove(gameObject);
+
+            GameObject first = _targets.FirstOrDefault();
+
+            if (first != _currentTarget)
+            {
+                _currentTarget = first;
+                SetUpCurrentTarget();
+            }
+        }
+
         public void PlacePlayerToTheLastCheckpoint()
         {
-            _player.transform.position = _lastActiveChackpointPosition;
-            _player.transform.rotation = Quaternion.identity;
-            _playerHealthSystem.Heal(_playerHealthSystem.MaxHealthPoints);
+            if (_currentTarget != null)
+            {
+                _currentTarget.transform.position = _lastActiveChackpointPosition;
+                _currentTarget.transform.rotation = Quaternion.identity;
+                _targetHealthSystem.Heal(_targetHealthSystem.MaxHealthPoints);
 
-            _player.SetActive(true);
+                _currentTarget.SetActive(true);
+            }
         }
 
         private void OnActivated(object sender, EventArgs args)
@@ -82,6 +87,21 @@ namespace Assets.Scripts.Environment.Checkpoint
             Checkpoints.Remove(checkpoint);
 
             _lastActiveChackpointPosition = checkpoint.transform.position;
+        }
+
+        private void SetUpCurrentTarget()
+        {
+            _targetHealthSystem = _currentTarget?.GetComponent<HealthSystem>();
+
+            if (_targetHealthSystem != null)
+            {
+                _targetHealthSystem.Death += OnPlayerDeath;
+
+                if (_lastActiveChackpointPosition == default(Vector2))
+                {
+                    _lastActiveChackpointPosition = _currentTarget.transform.position;
+                }
+            }
         }
 
         private void OnPlayerDeath(object sender, EventArgs args)

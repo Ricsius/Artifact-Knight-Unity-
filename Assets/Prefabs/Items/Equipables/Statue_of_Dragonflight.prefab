@@ -128,10 +128,6 @@ MonoBehaviour:
   <ScoreValue>k__BackingField: 100
   <Cooldown>k__BackingField: 0
   _transformationDuration: 5
-  _transformationMovementSpeed: 10
-  _transformationJumpForce: 0
-  _transformationStartingMovementState: 1
-  _defaultTrasformationController: {fileID: 0}
 --- !u!114 &593189262011814921
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
             } 
         }
         public ControllerMovementStateManager MovementStateManager { protected get; set; }
-        public event EventHandler BehaviourStateChangeRequest;
+        public event EventHandler<BehaviourStaceChangeRequestEventArgs> BehaviourStateChangeRequest;
         protected ControllerBehaviourStateManager _manager;
         protected Transform _transform;
         protected Collider2D _collider;

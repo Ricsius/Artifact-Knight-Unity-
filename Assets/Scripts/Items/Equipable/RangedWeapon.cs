@@ -29,10 +29,9 @@ namespace Assets.Scripts.Items.Equipable
             _spawner.Spawn();
         }
 
-        private void OnProjectileSpawned(object sender, EventArgs args)
+        private void OnProjectileSpawned(object sender, SpawnedEventArgs args)
         {
-            SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;
-            HomingProjectile homingProjectile = spawnedArgs.SpawnedObject.GetComponent<HomingProjectile>();
+            HomingProjectile homingProjectile = args.SpawnedObject.GetComponent<HomingProjectile>();
 
             if (homingProjectile != null)
             {

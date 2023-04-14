@@ -57,11 +57,9 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             {
                 _controller = _manager.Owner.GetComponent<EyenomancerController>();
                 _spawner = _transform.GetComponentInChildren<SpawnerBase>();
-                _spawner.Spawned += (object sender, EventArgs args) =>
+                _spawner.Spawned += (object sender, SpawnedEventArgs args) =>
                 {
-                    SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;
-
-                    spawnedArgs.SpawnedObject.GetComponent<HealthSystem>().Death += OnSummonedEyeDeath;
+                    args.SpawnedObject.GetComponent<HealthSystem>().Death += OnSummonedEyeDeath;
                 };
                 _activeEyes = 0;
             }

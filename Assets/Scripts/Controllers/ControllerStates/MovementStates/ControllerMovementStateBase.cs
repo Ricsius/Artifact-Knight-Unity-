@@ -18,7 +18,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
                 Init();
             }
         }
-        public event EventHandler AnimationParameterChangeRequest;
+        public event EventHandler<AnimationParameterChangeRequestEventArgs> AnimationParameterChangeRequest;
         protected Transform _transform;
         protected Rigidbody2D _rigidBody;
         protected Collider2D _collider;

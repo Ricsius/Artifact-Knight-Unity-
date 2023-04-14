@@ -31,6 +31,8 @@ namespace Assets.Scripts.Items.Equipable
 
         public override void OnAddedToEquipment(GameObject newOwner)
         {
+            base.OnAddedToEquipment(newOwner);
+
             Owner = newOwner;
             _isOwnedByPlayer = SpecialGameObjectRecognition.IsPlayer(Owner);
         }

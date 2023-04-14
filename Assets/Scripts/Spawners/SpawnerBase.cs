@@ -11,7 +11,7 @@ namespace Assets.Scripts.Spawners
         public Effect SpawnEffect { get; set; }
         [field: SerializeField]
         public GameObject ObjectToSpawn { get; set; }
-        public event EventHandler Spawned;
+        public event EventHandler<SpawnedEventArgs> Spawned;
 
         public void Spawn()
         {

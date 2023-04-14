@@ -2,8 +2,7 @@
 using Assets.Scripts.Environment.Checkpoint;
 using Assets.Scripts.Spawners;
 using Assets.Scripts.Systems.Health;
-using Assets.Scripts.Ui.Indicators;
-using System;
+using Assets.Scripts.Ui.Indicators.Targets;
 using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable
@@ -43,33 +42,30 @@ namespace Assets.Scripts.Items.Equipable
 
             if (_isOwnedByPlayer)
             {
-                PlayerIndicatorTarget playerIndicatorTarget= Owner.GetComponent<PlayerIndicatorTarget>();
-                CheckpointManagerTarget checkpointManagerTarget = Owner.GetComponent<CheckpointManagerTarget>();
                 ControllerBase originalController = transformation.GetComponent<ControllerBase>();
+                CheckpointManagerTarget checkpointManagerTarget = Owner.GetComponent<CheckpointManagerTarget>();
                 float speed = originalController.MovementSpeed;
                 float jumpForce = originalController.JumpForce;
 
-                DestroyImmediate(playerIndicatorTarget);
-                DestroyImmediate(checkpointManagerTarget);
                 DestroyImmediate(originalController);
+                DestroyImmediate(checkpointManagerTarget);
 
                 PlayerController playerController = transformation.AddComponent<PlayerController>();
 
                 playerController.MovementSpeed = speed;
                 playerController.JumpForce = jumpForce;
 
-                transformation.AddComponent<PlayerTransformationIndicatorTarget>();
+                transformation.AddComponent<PlayerIndicatorGroupTarget>();
                 transformation.AddComponent<CheckpointManagerTarget>();
             }
 
-            Owner.gameObject.SetActive(false);
             Owner.transform.parent = transformation.transform;
+            Owner.gameObject.SetActive(false);
         }
 
-        private void OnTransformationSpawned(object sender, EventArgs args)
+        private void OnTransformationSpawned(object sender, SpawnedEventArgs args)
         {
-            SpawnedEventArgs spawnedArgs = args as SpawnedEventArgs;
-            GameObject transformation = spawnedArgs.SpawnedObject;
+            GameObject transformation = args.SpawnedObject;
 
             TransformOwnerInto(transformation);
         }

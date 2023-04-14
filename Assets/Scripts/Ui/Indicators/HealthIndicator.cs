@@ -1,47 +1,28 @@
 using Assets.Scripts.Systems.Health;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Ui.Indicators
 {
-    public class HealthIndicator : IndicatorBase
+    public class HealthIndicator : IndicatorBase<HealthSystem>
     {
-        [field: SerializeField]
-        public GameObject HealthIcon { get; private set; }
-        public HealthSystem HealthSystem
-        {
-            get
-            {
-                return _healthSystem;
-            }
-            set
-            {
-                UnsubscribeFromEvents();
-
-                _healthSystem = value;
-
-                SubscribeToEvents();
-                ResetIndicator();
-            }
-        }
-
-        private HealthSystem _healthSystem;
+        [SerializeField]
+        private GameObject _healthIcon;
 
         protected override void SubscribeToEvents()
         {
-            if (_healthSystem != null)
+            if (_componentToIndicateTyped != null)
             {
-                _healthSystem.Healed += UpdateHealthIndicator;
-                _healthSystem.TookDamage += UpdateHealthIndicator;
+                _componentToIndicateTyped.Healed += UpdateHealthIndicator;
+                _componentToIndicateTyped.TookDamage += UpdateHealthIndicator;
             }
         }
 
         protected override void UnsubscribeFromEvents()
         {
-            if (_healthSystem != null)
+            if (_componentToIndicateTyped != null)
             {
-                _healthSystem.Healed -= UpdateHealthIndicator;
-                _healthSystem.TookDamage -= UpdateHealthIndicator;
+                _componentToIndicateTyped.Healed -= UpdateHealthIndicator;
+                _componentToIndicateTyped.TookDamage -= UpdateHealthIndicator;
             }
         }
 
@@ -49,7 +30,7 @@ namespace Assets.Scripts.Ui.Indicators
         {
             for (int i = 0; i < amount; i++)
             {
-                Instantiate(HealthIcon).transform.SetParent(transform);
+                Instantiate(_healthIcon).transform.SetParent(transform);
             }
         }
 
@@ -63,24 +44,22 @@ namespace Assets.Scripts.Ui.Indicators
 
         protected override void ResetIndicator()
         {
-            if (_healthSystem != null)
+            if (_componentToIndicateTyped != null)
             {
                 RemoveHealthIcons(transform.childCount);
-                AddHealthIcons(_healthSystem.CurrentHealthPoints);
+                AddHealthIcons(_componentToIndicateTyped.CurrentHealthPoints);
             }
         }
 
-        private void UpdateHealthIndicator(object sender, EventArgs args)
+        private void UpdateHealthIndicator(object sender, HealthChangeEventArgs args)
         {
-            HealthChangeEventArgs healthChange = args as HealthChangeEventArgs;
-
-            if (healthChange.IsDamage)
+            if (args.IsDamage)
             {
-                RemoveHealthIcons(healthChange.HealthChange);
+                RemoveHealthIcons(args.HealthChange);
             }
             else
             {
-                AddHealthIcons(healthChange.HealthChange);
+                AddHealthIcons(args.HealthChange);
             }
         }
     }

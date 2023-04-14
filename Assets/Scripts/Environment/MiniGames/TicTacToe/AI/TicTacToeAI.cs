@@ -20,11 +20,13 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
         }
         public Position CalculateNextMove()
         {
+            //ToDo: Balance this!
             Position opponentWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(_opponentID, _gameState));
 
             if (opponentWinningPatternCompleteingPosition != null)
             {
-                return opponentWinningPatternCompleteingPosition;
+                //return opponentWinningPatternCompleteingPosition;
+                return SelectRandomPosition(_gameState.UnmarkedPositions);
             }
 
             Position myWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(_myID, _gameState));

@@ -7,6 +7,7 @@ namespace Assets.Scripts.Controllers
 {
     public class MobControllerBase : ControllerBase
     {
+        //ToDo: Stealing ghost
         [field: SerializeField]
         public ControllerBehaviourStateType StartingBehaviorState { get; protected set; }
         [field: SerializeField]
