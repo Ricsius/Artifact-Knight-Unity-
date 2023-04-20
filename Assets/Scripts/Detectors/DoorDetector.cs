@@ -16,9 +16,7 @@ namespace Assets.Scripts.Detectors
         {
             RaycastHit2D[] raycastHits = Physics2D.BoxCastAll(transform.position, _collider.bounds.size, 0, transform.right, .1f);
             RaycastHit2D hit = raycastHits.FirstOrDefault(rh => SpecialGameObjectRecognition.IsDoor(rh.transform.gameObject));
-            Door ret = hit.transform != null 
-                ? hit.transform.gameObject.GetComponent<Door>() 
-                : null;
+            Door ret = hit.transform?.gameObject.GetComponent<Door>();
 
             return ret;
         }

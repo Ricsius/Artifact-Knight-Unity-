@@ -18,6 +18,7 @@ namespace Assets.Scripts.Controllers
         private LadderDetector _ladderDetector;
         private DoorDetector _doorDetector;
         private ProfessorDetector _professorDetector;
+        private ChestDetector _chestDetector;
         private float _cameraYOffset;
         private KeyCode _moveRightKey;
         private KeyCode _moveLeftKey;
@@ -39,6 +40,7 @@ namespace Assets.Scripts.Controllers
             _ladderDetector = GetComponent<LadderDetector>();
             _doorDetector = GetComponent<DoorDetector>();
             _professorDetector = GetComponent<ProfessorDetector>();
+            _chestDetector = GetComponent<ChestDetector>();
 
             _movementStateManager.Manage<DefaultGroundedMovementState>();
             _movementStateManager.Manage<DefaultInAirMovementState>();
@@ -161,12 +163,8 @@ namespace Assets.Scripts.Controllers
                 }
             }
 
-            Professor professor = _professorDetector?.Detect();
-
-            if (professor != null)
-            {
-                professor.CheckEquipment(_equipment);
-            }
+            _professorDetector?.Detect()?.CheckEquipment(_equipment);
+            _chestDetector?.Detect()?.Open();
         }
     }
 }

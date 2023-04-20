@@ -1,4 +1,5 @@
 ﻿
+using Assets.Scripts.Environment;
 using Assets.Scripts.Items;
 using System.Linq;
 using UnityEngine;
@@ -17,9 +18,7 @@ namespace Assets.Scripts.Detectors
         {
             RaycastHit2D[] raycastHits = Physics2D.BoxCastAll(transform.position, _collider.bounds.size, 0, transform.right, .1f);
             RaycastHit2D hit = raycastHits.FirstOrDefault(rh => SpecialGameObjectRecognition.IsItem(rh.transform.gameObject));
-            ItemBase ret = hit.transform != null
-                ? hit.transform.gameObject.GetComponent<ItemBase>()
-                : null;
+            ItemBase ret = hit.transform?.gameObject.GetComponent<ItemBase>();
 
             return ret;
         }

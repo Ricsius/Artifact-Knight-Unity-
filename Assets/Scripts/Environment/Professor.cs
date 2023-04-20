@@ -9,18 +9,23 @@ namespace Assets.Scripts.Environment
     public class Professor : MonoBehaviour
     {
         [field: SerializeField]
-        public ItemBase RequiredItem { get; private set; }
+        private ItemBase _requiredItem;
+        private IdeaBubble _ideaBubble;
         private SceneLoader _sceneLoader;
 
         protected virtual void Awake()
         {
             tag = "Professor";
+            _ideaBubble = GetComponentInChildren<IdeaBubble>();
+            _ideaBubble.Sprite = _requiredItem.GetComponent<SpriteRenderer>().sprite;
             _sceneLoader = GetComponent<SceneLoader>();
+
+            _ideaBubble.gameObject.SetActive(false);
         }
 
         public void CheckEquipment(EquipmentSystem equipment)
         {
-            bool hasRequiredItem = equipment.ContainsItem(RequiredItem);
+            bool hasRequiredItem = equipment.ContainsItem(_requiredItem);
 
             if (hasRequiredItem)
             {
@@ -31,7 +36,7 @@ namespace Assets.Scripts.Environment
             }
             else
             {
-                //ToDo: Remind player to the required item
+                _ideaBubble.gameObject.SetActive(true);
             }
         }
     }

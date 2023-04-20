@@ -37,6 +37,14 @@ namespace Assets.Scripts.Items.Equipable
             _isOwnedByPlayer = SpecialGameObjectRecognition.IsPlayer(Owner);
         }
 
+        public override void OnRemovedFromEquipment()
+        {
+            base.OnRemovedFromEquipment();
+
+            Owner = null;
+            _isOwnedByPlayer = false;
+        }
+
         public void Use()
         {
             if (!IsOnCooldown)

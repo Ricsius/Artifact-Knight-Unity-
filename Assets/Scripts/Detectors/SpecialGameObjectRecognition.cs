@@ -39,5 +39,10 @@ namespace Assets.Scripts.Detectors
         {
             return gameObject.tag.Equals("Mob");
         }
+
+        public static bool IsChest(GameObject gameObject)
+        {
+            return gameObject.tag.Equals("Chest");
+        }
     }
 }

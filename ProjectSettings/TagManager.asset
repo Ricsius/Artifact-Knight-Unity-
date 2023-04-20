@@ -11,6 +11,7 @@ TagManager:
   - Professor
   - Mob
   - Owned_Item
+  - Chest
   layers:
   - Default
   - TransparentFX

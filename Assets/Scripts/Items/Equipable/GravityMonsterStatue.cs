@@ -16,6 +16,14 @@ namespace Assets.Scripts.Items.Equipable
             _ownerRigidbody = newOwner.GetComponent<Rigidbody2D>();
         }
 
+        public override void OnRemovedFromEquipment()
+        {
+            base.OnRemovedFromEquipment();
+
+            _ownerTransform = null;
+            _ownerRigidbody = null;
+        }
+
         protected override void Effect()
         {
             _ownerTransform.Rotate(_ownerTransform.right * 180);

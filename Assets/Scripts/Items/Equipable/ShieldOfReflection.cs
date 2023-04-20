@@ -8,7 +8,6 @@ namespace Assets.Scripts.Items.Equipable
     {
         [field: SerializeField]
         public Sprite LoadedSprite { get; private set; }
-        private SpriteRenderer _spriteRenderer;
         private Sprite _originalSprite;
 
         protected override void Awake()

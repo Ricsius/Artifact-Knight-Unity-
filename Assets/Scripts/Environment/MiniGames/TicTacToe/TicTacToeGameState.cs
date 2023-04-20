@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 using Unity.VisualScripting;
 
 namespace Assets.Scripts.Environment.MiniGames.TicTacToe

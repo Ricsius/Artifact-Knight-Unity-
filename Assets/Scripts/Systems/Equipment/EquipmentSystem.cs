@@ -16,9 +16,9 @@ namespace Assets.Scripts.Systems.Equipment
         public EventHandler<ItemEventArgs> NewItemAdded;
         public EventHandler<ItemEventArgs> ItemRemoved;
         private Collider2D _collider;
+        private SpriteRenderer _spriteRenderer;
         private LinkedListNode<ItemBase> _equippedItemNode;
         private SpriteRenderer _equipedItemRenderer;
-        private Collider2D _equipedItemCollider;
         private Dictionary<ItemType, LinkedList<ItemBase>> _inventory;
         [SerializeField]
         private List<ItemBase> _preparedItems;
@@ -26,6 +26,7 @@ namespace Assets.Scripts.Systems.Equipment
         protected virtual void Awake()
         {
             _collider = GetComponent<Collider2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _inventory = new Dictionary<ItemType, LinkedList<ItemBase>>();
 
             foreach (ItemType itemType in Enum.GetValues(typeof(ItemType)))
@@ -56,16 +57,20 @@ namespace Assets.Scripts.Systems.Equipment
 
         public void RemoveItem(ItemBase item)
         {
-            if (item == EquipedItem)
-            {
-                EquipNextItem();
-            }
-
             bool removed = _inventory[item.Type].Remove(item);
 
             if (removed)
             {
+                item.transform.parent = null;
                 ItemRemoved?.Invoke(this, new ItemEventArgs(item));
+
+                if (item == EquipedItem)
+                {
+                    UnEquipEquipedItem();
+                    EquipNextItem();
+                }
+
+                item.OnRemovedFromEquipment();
             }
         }
 
@@ -85,8 +90,6 @@ namespace Assets.Scripts.Systems.Equipment
         {
             LinkedList<ItemBase> equipableItems = _inventory[ItemType.Equipable];
 
-            UnEquipEquipedItem();
-
             if (equipableItems.Any())
             {
                 if (_equippedItemNode == null)
@@ -101,7 +104,6 @@ namespace Assets.Scripts.Systems.Equipment
                 }
 
                 _equipedItemRenderer = EquipedItem.GetComponent<SpriteRenderer>();
-                _equipedItemCollider = EquipedItem.GetComponent<Collider2D>();
             }
 
             NewItemEquipped?.Invoke(this, new ItemEventArgs(EquipedItem));
@@ -111,20 +113,17 @@ namespace Assets.Scripts.Systems.Equipment
         {
             if (EquipedItem != null)
             {
-                _equipedItemRenderer.enabled = true;
-                _equipedItemCollider.enabled = true;
-                _equipedItemRenderer.sortingOrder = gameObject.GetComponent<SpriteRenderer>().sortingOrder;
+                EquipedItem.Reveal();
+
+                _equipedItemRenderer.sortingOrder = _spriteRenderer.sortingOrder;
+
                 EquipedItem.Use();
             }
         }
 
         public void StopUseEquipedItem()
         {
-            if (EquipedItem != null)
-            {
-                _equipedItemRenderer.enabled = false;
-                _equipedItemCollider.enabled = false;
-            }
+            EquipedItem?.Hide();
         }
 
         private void AddItem(ItemBase item, bool invokeEvent)
@@ -154,14 +153,13 @@ namespace Assets.Scripts.Systems.Equipment
                 NewItemAdded?.Invoke(this, new ItemEventArgs(item));
             }
 
-            item.GetComponent<SpriteRenderer>().enabled = false;
-            item.GetComponent<Collider2D>().enabled = false;
+            item.Hide();
         }
 
         private void UnEquipEquipedItem()
         {
+            _equippedItemNode = null;
             _equipedItemRenderer = null;
-            _equipedItemCollider = null;
         }
     }
 }

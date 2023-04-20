@@ -22,5 +22,11 @@ namespace Assets.Scripts.Items.Equipable
             base.OnAddedToEquipment(newOwner);
             _hitBox.HealthEffect = _healthEfect;
         }
+
+        public override void OnRemovedFromEquipment()
+        {
+            base.OnRemovedFromEquipment();
+            _hitBox.HealthEffect = 0;
+        }
     }
 }

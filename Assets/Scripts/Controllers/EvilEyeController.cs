@@ -18,7 +18,7 @@ namespace Assets.Scripts.Controllers
             _behaviorStateManager.Manage<EvilEyeAggroBehaviourState>();
         }
 
-        protected void OnCollisionEnter2D(Collision2D collision)
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
         }
     }
