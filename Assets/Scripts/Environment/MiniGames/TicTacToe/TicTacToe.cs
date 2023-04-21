@@ -1,5 +1,6 @@
 using Assets.Scripts.Environment.MiniGames.TicTacToe.AI;
 using Assets.Scripts.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,11 +9,20 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 {
     public class TicTacToe : MonoBehaviour
     {
-        //ToDo: Players settable in editor, background change on game end
+        public TicTacToeGameState GameState { get; private set; }
+        public EventHandler<TurnElapsedEventArgs> TurnElapsed;
         [SerializeField]
         private Transform _rows;
         [SerializeField]
-        private List<Sprite> _playerSprites;
+        private GameObject _player1Object;
+        [SerializeField]
+        private GameObject _player2Object;
+        [SerializeField]
+        private Sprite _player1Sprite;
+        [SerializeField]
+        private Sprite _player2Sprite;
+        private Dictionary<GameObject, int> _playerIDs;
+        private Dictionary<int, Sprite> _playerSprites;
         [SerializeField]
         private ItemBase _reward;
         [SerializeField]
@@ -21,24 +31,45 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         private float _timeTillRestart;
         private bool _isRestarting;
         private TicTacToeTile[,] _tiles;
-        private int _mainGamePlayerID;
-        private int _aIPlayerID;
-        private TicTacToeGameState _gameState;
-        private TicTacToeAI _ai;
-        private int[] _playerIDs;
-        private int _startingPlayerIndex;
-        private int _currentPlayerIndex;
+        private int _player1ID;
+        private int _player2ID;
+        private int _startingPlayerID;
+        private int _currentPlayerID;
 
         protected virtual void Awake()
         {
             _gameSize = _rows.childCount;
-            _mainGamePlayerID = 0;
-            _aIPlayerID = 1;
-            _playerIDs = new int[] { _mainGamePlayerID, _aIPlayerID };
-            _gameState = new TicTacToeGameState(_gameSize, _playerIDs);
-            _ai = new TicTacToeAI(_aIPlayerID, _mainGamePlayerID, _gameState);
+            _player1ID = 0;
+            _player2ID = 1;
+
+            _playerIDs = new Dictionary<GameObject, int>
+            {
+                { _player1Object, _player1ID },
+                { _player2Object, _player2ID }
+            };
+
+            _playerSprites = new Dictionary<int, Sprite>
+            {
+                { _player1ID, _player1Sprite },
+                { _player2ID, _player2Sprite }
+            };
+
+            GameState = new TicTacToeGameState(_gameSize, _playerIDs.Values);
             _tiles = new TicTacToeTile[_gameSize, _gameSize];
-            _startingPlayerIndex = -1;
+
+            foreach (GameObject player in _playerIDs.Keys)
+            {
+                TicTacToeAI ai = player.GetComponent<TicTacToeAI>();
+
+                if (ai != null)
+                {
+                    int id = _playerIDs[player];
+
+                    ai.ID = id;
+                    ai.OpponentID = id == _player1ID ? _player2ID : _player1ID;
+                    ai.Game = this;
+                }
+            }
 
             for (int i = 0; i < _gameSize; ++i)
             {
@@ -56,6 +87,8 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
             }
 
             _reward.gameObject.SetActive(false);
+
+            _startingPlayerID = -1;
 
             ResetGame();
         }
@@ -77,61 +110,56 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         {
             List<Position> markedPositions = new List<Position>();
 
-            markedPositions.AddRange(_gameState.GetMarkedPositions(_mainGamePlayerID));
-            markedPositions.AddRange(_gameState.GetMarkedPositions(_aIPlayerID));
+            markedPositions.AddRange(GameState.GetMarkedPositions(_player1ID));
+            markedPositions.AddRange(GameState.GetMarkedPositions(_player2ID));
 
             foreach (Position position in markedPositions)
             {
                 _tiles[position.X, position.Y].Sprite = null;
             }
 
-            foreach (Position position in _gameState.UnmarkedPositions)
+            foreach (Position position in GameState.UnmarkedPositions)
             {
                 _tiles[position.X, position.Y].MarkRequested -= OnTileMarkRequest;
             }
 
-            _gameState.Reset();
+            GameState.Reset();
 
             _isRestarting = false;
 
-            foreach (Position position in _gameState.UnmarkedPositions)
+            foreach (Position position in GameState.UnmarkedPositions)
             {
                 _tiles[position.X, position.Y].MarkRequested += OnTileMarkRequest;
             }
 
-            _startingPlayerIndex = (_startingPlayerIndex + 1) % _playerIDs.Length;
-            _currentPlayerIndex = _startingPlayerIndex;
+            _startingPlayerID = _startingPlayerID == _player1ID ? _player2ID : _player1ID;
+            _currentPlayerID = _startingPlayerID;
 
-            if (_playerIDs[_currentPlayerIndex] == _aIPlayerID)
-            {
-                AIAction();
-            }
+            TurnElapsed?.Invoke(this, new TurnElapsedEventArgs(_currentPlayerID));
         }
 
-        private void AIAction()
+        public void MarkTile(Position position, GameObject player)
         {
-            Position nextMove = _ai.CalculateNextMove();
-
-            _tiles[nextMove.X, nextMove.Y].MarkRequest(_playerIDs[_currentPlayerIndex]);
+            _tiles[position.X, position.Y].MarkRequest(player);
         }
 
         private void OnTileMarkRequest(object sender, TileMarkEventArgs args)
         {
-            int playerID = args.PlayerID;
+            GameObject player = args.Player;
 
-            if (_playerIDs[_currentPlayerIndex] != playerID)
+            if (_playerIDs[player] != _currentPlayerID)
             {
                 return;
             }
 
             TicTacToeTile tile = sender as TicTacToeTile;
 
-            _gameState.PutMark(playerID, tile.Position);
+            GameState.PutMark(_currentPlayerID, tile.Position);
 
-            tile.Sprite = _playerSprites[playerID];
+            tile.Sprite = _playerSprites[_currentPlayerID];
             tile.MarkRequested -= OnTileMarkRequest;
 
-            if (_gameState.CheckWinCondition(_mainGamePlayerID))
+            if (GameState.CheckWinCondition(_player1ID))
             {
                 _reward.gameObject.SetActive(true);
 
@@ -139,7 +167,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 
                 return;
             } 
-            else if (_gameState.CheckWinCondition(_aIPlayerID) || !_gameState.UnmarkedPositions.Any())
+            else if (GameState.CheckWinCondition(_player2ID) || !GameState.UnmarkedPositions.Any())
             {
                 _timeTillRestart = _restartDelay;
                 _isRestarting = true;
@@ -147,12 +175,9 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
                 return;
             }
 
-            _currentPlayerIndex = (_currentPlayerIndex + 1) % _playerIDs.Length;
+            _currentPlayerID = _currentPlayerID == _player1ID ? _player2ID : _player1ID;
 
-            if (_playerIDs[_currentPlayerIndex] == _aIPlayerID && _gameState.UnmarkedPositions.Any())
-            {
-                AIAction();
-            }
+            TurnElapsed?.Invoke(this, new TurnElapsedEventArgs(_currentPlayerID));
         }
     }
 }

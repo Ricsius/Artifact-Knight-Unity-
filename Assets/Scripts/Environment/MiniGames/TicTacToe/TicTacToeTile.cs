@@ -16,16 +16,9 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
                 _spriteRenderer.sprite = value;
             }
         }
-        public int MainGamePlayerID
-        {
-            set
-            {
-                _mainGamePlayerID = value;
-            }
-        }
+
         public EventHandler<TileMarkEventArgs> MarkRequested;
         private SpriteRenderer _spriteRenderer;
-        private int _mainGamePlayerID;
 
         protected virtual void Awake()
         {
@@ -35,16 +28,16 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         protected virtual void OnTriggerEnter2D(Collider2D collider)
         {
             EquipableItem item = collider.GetComponent<EquipableItem>();
-
-            if (item != null && SpecialGameObjectRecognition.IsPlayer(item.Owner))
+            
+            if (item != null)
             {
-                MarkRequest(_mainGamePlayerID);
+                MarkRequest(item.Owner);
             }
         }
 
-        public void MarkRequest(int playerID)
+        public void MarkRequest(GameObject player)
         {
-            MarkRequested?.Invoke(this, new TileMarkEventArgs(playerID));
+            MarkRequested?.Invoke(this, new TileMarkEventArgs(player));
         }
     }
 }

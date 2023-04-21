@@ -1,27 +1,51 @@
 ﻿
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
 {
-    public class TicTacToeAI
+    public class TicTacToeAI : MonoBehaviour
     {
-        private int _myID;
-        private int _opponentID;
-        private TicTacToeGameState _gameState;
-
-        public TicTacToeAI(int myID, int mainGamePlayerID, TicTacToeGameState gameState)
+        public int ID { private get; set; }
+        public int OpponentID { private get; set; }
+        public TicTacToe Game 
         {
-            _myID = myID;
-            _opponentID = mainGamePlayerID;
-            _gameState = gameState;
+            set
+            {
+                _game = value;
+                _gameState = _game.GameState;
+                _game.TurnElapsed += OnTurnElapsed;
+            }
         }
-        public Position CalculateNextMove()
+        private TicTacToe _game;
+        private TicTacToeGameState _gameState;
+        [SerializeField]
+        private float _actionDelay;
+
+        private void OnTurnElapsed(object sender, TurnElapsedEventArgs args)
+        {
+            if (ID == args.NextPlayerID)
+            {
+                StartCoroutine(ActionWithDelay());
+            }
+        }
+
+        private IEnumerator ActionWithDelay()
+        {
+            yield return new WaitForSeconds(_actionDelay);
+
+            _game.MarkTile(CalculateNextMove(), gameObject);
+        }
+
+        private Position CalculateNextMove()
         {
             //ToDo: Balance this!
-            Position opponentWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(_opponentID, _gameState));
+            Position opponentWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(OpponentID, _gameState));
 
             if (opponentWinningPatternCompleteingPosition != null)
             {
@@ -29,7 +53,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
                 return SelectRandomPosition(_gameState.UnmarkedPositions);
             }
 
-            Position myWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(_myID, _gameState));
+            Position myWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(ID, _gameState));
 
             if (myWinningPatternCompleteingPosition != null)
             {
@@ -37,7 +61,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
             }
 
             ConcurrentBag<SimulationEvaluation> simulationEvaluations = new ConcurrentBag<SimulationEvaluation>();
-            IEnumerable<IEnumerable<Position>> myPossibleWinningPatterns = PossibleWinningPatterns(_myID, _gameState);
+            IEnumerable<IEnumerable<Position>> myPossibleWinningPatterns = PossibleWinningPatterns(ID, _gameState);
             List<Position> myPossibleEmptyWinningPatternPositions = new List<Position>();
 
             foreach (IEnumerable<Position> pattern in myPossibleWinningPatterns)
@@ -50,11 +74,11 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
             Parallel.ForEach(_gameState.UnmarkedPositions, unmarkedPosition =>
             {
                 TicTacToeGameState simulation = _gameState.Copy();
-                simulation.PutMark(_myID, unmarkedPosition);
+                simulation.PutMark(ID, unmarkedPosition);
 
                 IEnumerable<IEnumerable<Position>> winningPatterns = simulation.WinningPatterns;
-                IEnumerable<Position> myMarks = simulation.GetMarkedPositions(_myID);
-                int impossibleWinningPatternsForOpponent = simulation.WinningPatterns.Count() - PossibleWinningPatterns(_opponentID, simulation).Count();
+                IEnumerable<Position> myMarks = simulation.GetMarkedPositions(ID);
+                int impossibleWinningPatternsForOpponent = simulation.WinningPatterns.Count() - PossibleWinningPatterns(OpponentID, simulation).Count();
 
                 SimulationEvaluation evaluation = new SimulationEvaluation(unmarkedPosition, impossibleWinningPatternsForOpponent);
 

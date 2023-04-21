@@ -81,9 +81,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rows: {fileID: 2990876349562212890}
-  _playerSprites:
-  - {fileID: 21300000, guid: 3c8e59a82080ff744bc018491dab40fb, type: 3}
-  - {fileID: 21300000, guid: f0293565641b5e141b515acba47b336d, type: 3}
+  _player1Object: {fileID: 0}
+  _player2Object: {fileID: 0}
+  _player1Sprite: {fileID: 21300000, guid: 3c8e59a82080ff744bc018491dab40fb, type: 3}
+  _player2Sprite: {fileID: 21300000, guid: f0293565641b5e141b515acba47b336d, type: 3}
   _reward: {fileID: 0}
   _restartDelay: 5
 --- !u!1 &4963706330289392469

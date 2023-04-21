@@ -1,14 +1,15 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 {
     public class TileMarkEventArgs : EventArgs
     {
-        public int PlayerID { get; private set; }
+        public GameObject Player { get; private set; }
 
-        public TileMarkEventArgs(int playerID)
+        public TileMarkEventArgs(GameObject player)
         {
-            PlayerID = playerID;
+            Player = player;
         }
     }
 }
