@@ -1,7 +1,6 @@
 
 using Assets.Scripts.Controllers.ControllerStates.MovementStates;
 using Assets.Scripts.Detectors;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -54,14 +53,8 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
                 type = ControllerMovementStateType.InAir;
             }
 
-            if (CurrentMovementState != null)
-            {
-                CurrentMovementState?.OnDeselect();
-                CurrentMovementState.AnimationParameterChangeRequest -= OnAnimationParameterChangeRequest;
-            }
-
+            CurrentMovementState?.OnDeselect();
             CurrentMovementState = _movementStates[type];
-            CurrentMovementState.AnimationParameterChangeRequest += OnAnimationParameterChangeRequest;
             CurrentMovementState.OnSelect();
 
             return !settingIsRejected;
@@ -94,29 +87,15 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
             }
         }
 
-        private void OnAnimationParameterChangeRequest(object sender, AnimationParameterChangeRequestEventArgs args)
+        public void SetCurrentAnimationParameter(AnimationParameterName parameterName)
         {
-            TrySetAnimationParameter(args.ParameterName);
-        }
-
-        private bool TrySetAnimationParameter(string parameterName)
-        {
-            try
+            if (!string.IsNullOrEmpty(_currentAnimationParameterName))
             {
-                if (!string.IsNullOrEmpty(_currentAnimationParameterName))
-                {
-                    _animator.SetBool(_currentAnimationParameterName, false);
-                }
-                
-                _currentAnimationParameterName = parameterName;
-                _animator.SetBool(_currentAnimationParameterName, true);
+                _animator.SetBool(_currentAnimationParameterName, false);
+            }
 
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            _currentAnimationParameterName = parameterName.ToString();
+            _animator.SetBool(_currentAnimationParameterName, true);
         }
     }
 }

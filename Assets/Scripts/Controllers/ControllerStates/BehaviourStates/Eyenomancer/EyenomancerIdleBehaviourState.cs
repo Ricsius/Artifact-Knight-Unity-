@@ -21,7 +21,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             
             if (isPlayerDetected)
             {
-                InvokeBehaviourStateChangeRequest(ControllerBehaviourStateType.Aggro);
+                _manager.SetCurrentBehaviorState(ControllerBehaviourStateType.Aggro);
             }
         }
     }

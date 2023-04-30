@@ -14,11 +14,6 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Dragon
         {
         }
 
-        public override void OnSelect()
-        {
-            _equipmentSystem = _manager.Owner.GetComponent<EquipmentSystem>();
-        }
-
         public override void Behaviour()
         {
             Transform playerTransform = DetectGameObjectsFront().FirstOrDefault(o => SpecialGameObjectRecognition.IsPlayer(o))?.transform;
@@ -27,6 +22,13 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Dragon
             {
                 _equipmentSystem.UseEquipedItem();
             }
+        }
+
+        protected override void Init()
+        {
+            base.Init();
+
+            _equipmentSystem = _manager.Owner.GetComponent<EquipmentSystem>();
         }
     }
 }

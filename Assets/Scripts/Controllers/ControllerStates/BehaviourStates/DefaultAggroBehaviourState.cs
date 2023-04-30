@@ -1,5 +1,4 @@
 
-using Assets.Scripts.Controllers.ControllerStates.Managers;
 using Assets.Scripts.Detectors;
 using System.Linq;
 using UnityEngine;
@@ -21,24 +20,24 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
                 if (playerObject != null)
                 {
                     float directionX = _transform.position.x <= playerObject.transform.position.x ? 1 : -1;
-                    Vector2 newDirection = new Vector2(directionX, CurrentDirection.y);
+                    Vector2 newDirection = new Vector2(directionX, _manager.CurrentDirection.y);
 
-                    CurrentDirection = newDirection;
+                    _manager.CurrentDirection = newDirection;
 
-                    MovementStateManager.CurrentMovementState.Move(CurrentDirection);
+                    MovementStateManager.CurrentMovementState.Move(_manager.CurrentDirection);
                 }
                 else
                 {
-                    InvokeBehaviourStateChangeRequest(ControllerBehaviourStateType.Patrol);
+                    _manager.SetCurrentBehaviorState(ControllerBehaviourStateType.Patrol);
                 }
             }
         }
 
         public override void OnDeselect()
         {
-            Vector2 newDirection = new Vector2(-CurrentDirection.x, CurrentDirection.y);
+            Vector2 newDirection = new Vector2(-_manager.CurrentDirection.x, _manager.CurrentDirection.y);
 
-            CurrentDirection = newDirection;
+            _manager.CurrentDirection = newDirection;
         }
     }
 }

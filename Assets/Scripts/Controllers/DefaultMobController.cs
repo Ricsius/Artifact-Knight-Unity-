@@ -1,7 +1,6 @@
 
 using Assets.Scripts.Controllers.ControllerStates.BehaviourStates;
 using Assets.Scripts.Controllers.ControllerStates.MovementStates;
-using UnityEngine;
 
 namespace Assets.Scripts.Controllers
 {
@@ -16,16 +15,6 @@ namespace Assets.Scripts.Controllers
 
             _behaviorStateManager.Manage<DefaultPatrolBehaviourState>();
             _behaviorStateManager.Manage<DefaultAggroBehaviourState>();
-        }
-        protected virtual void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (_behaviorStateManager.CurrentBehaviourState.Type != ControllerBehaviourStateType.Aggro)
-            {
-                Vector2 currentDirextion = _behaviorStateManager.CurrentBehaviourState.CurrentDirection;
-                Vector2 newDirection = new Vector2(-currentDirextion.x, currentDirextion.y);
-
-                _behaviorStateManager.CurrentBehaviourState.CurrentDirection = newDirection;
-            }
         }
     }
 }

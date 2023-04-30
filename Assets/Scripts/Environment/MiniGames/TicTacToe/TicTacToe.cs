@@ -1,6 +1,7 @@
 using Assets.Scripts.Environment.MiniGames.TicTacToe.AI;
 using Assets.Scripts.Items;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -28,8 +29,8 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         [SerializeField]
         private float _restartDelay;
         private int _gameSize;
-        private float _timeTillRestart;
-        private bool _isRestarting;
+        [SerializeField]
+        private bool _endless;
         private TicTacToeTile[,] _tiles;
         private int _player1ID;
         private int _player2ID;
@@ -90,24 +91,15 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 
             _startingPlayerID = -1;
 
-            ResetGame();
+            StartCoroutine(ResetGame(0));
         }
 
-        protected virtual void Update()
+        private IEnumerator ResetGame(float delay)
         {
-            if (_timeTillRestart > 0)
-            {
-                _timeTillRestart -= Time.deltaTime;
-            }
+            _currentPlayerID = -1;
 
-            if (_isRestarting && _timeTillRestart <= 0)
-            {
-                ResetGame();
-            }
-        }
+            yield return new WaitForSeconds(delay);
 
-        private void ResetGame()
-        {
             List<Position> markedPositions = new List<Position>();
 
             markedPositions.AddRange(GameState.GetMarkedPositions(_player1ID));
@@ -124,8 +116,6 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
             }
 
             GameState.Reset();
-
-            _isRestarting = false;
 
             foreach (Position position in GameState.UnmarkedPositions)
             {
@@ -147,7 +137,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
         {
             GameObject player = args.Player;
 
-            if (_playerIDs[player] != _currentPlayerID)
+            if (!_playerIDs.ContainsKey(player) || _playerIDs[player] != _currentPlayerID)
             {
                 return;
             }
@@ -159,7 +149,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
             tile.Sprite = _playerSprites[_currentPlayerID];
             tile.MarkRequested -= OnTileMarkRequest;
 
-            if (GameState.CheckWinCondition(_player1ID))
+            if (GameState.CheckWinCondition(_player1ID) && !_endless)
             {
                 _reward.gameObject.SetActive(true);
 
@@ -167,10 +157,11 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
 
                 return;
             } 
-            else if (GameState.CheckWinCondition(_player2ID) || !GameState.UnmarkedPositions.Any())
+            else if ((GameState.CheckWinCondition(_player1ID) && _endless) 
+                || GameState.CheckWinCondition(_player2ID) 
+                || !GameState.UnmarkedPositions.Any())
             {
-                _timeTillRestart = _restartDelay;
-                _isRestarting = true;
+                StartCoroutine(ResetGame(_restartDelay));
 
                 return;
             }

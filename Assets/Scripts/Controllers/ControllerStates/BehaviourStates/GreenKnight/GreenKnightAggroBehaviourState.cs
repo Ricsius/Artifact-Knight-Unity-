@@ -12,16 +12,15 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.GreenKnigh
             
         }
 
+        protected override void Init()
+        {
+            base.Init();
+
+            _spawner = _manager.Owner.GetComponent<TimedSpawner>();
+        }
+
         public override void OnSelect()
         {
-            base.OnSelect();
-
-            if (_spawner == null)
-            {
-                _spawner = _manager.Owner.GetComponent<TimedSpawner>();
-            }
-
-            
             _spawner.ResetSpawnInterval();
             _spawner.enabled = true;
         }

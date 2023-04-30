@@ -10,18 +10,16 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
     public abstract class ControllerBehaviourStateBase
     {
         public ControllerBehaviourStateType Type { get; }
-        public Vector2 CurrentDirection { get; set; }
         public ControllerBehaviourStateManager Manager 
         { 
             set 
             {
-                _manager= value;
+                _manager = value;
 
-                Reset();
+                Init();
             } 
         }
         public ControllerMovementStateManager MovementStateManager { protected get; set; }
-        public event EventHandler<BehaviourStaceChangeRequestEventArgs> BehaviourStateChangeRequest;
         protected ControllerBehaviourStateManager _manager;
         protected Transform _transform;
         protected Collider2D _collider;
@@ -39,11 +37,6 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
         }
         public virtual void Behaviour()
         {
-        }
-
-        protected void InvokeBehaviourStateChangeRequest(ControllerBehaviourStateType type)
-        {
-            BehaviourStateChangeRequest?.Invoke(this, new BehaviourStaceChangeRequestEventArgs(type));
         }
 
         protected IEnumerable<GameObject> DetectGameObjectsFront()
@@ -82,7 +75,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates
             return ret;
         }
 
-        protected virtual void Reset()
+        protected virtual void Init()
         {
             _transform = _manager.Owner.transform;
             _collider = _manager.Owner.GetComponent<Collider2D>();

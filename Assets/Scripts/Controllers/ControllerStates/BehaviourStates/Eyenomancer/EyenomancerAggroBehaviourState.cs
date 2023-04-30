@@ -19,6 +19,11 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
         {
         }
 
+        public override void OnSelect()
+        {
+            _timeTillSummon = _controller.SummonCooldown;
+        }
+
         public override void Behaviour()
         {
 
@@ -35,7 +40,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             }
             else
             {
-                InvokeBehaviourStateChangeRequest(ControllerBehaviourStateType.Idle);
+                _manager.SetCurrentBehaviorState(ControllerBehaviourStateType.Idle);
             }
 
             if (_timeTillSummon > 0)
@@ -49,22 +54,14 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             }
         }
 
-        protected override void Reset()
+        protected override void Init()
         {
-            base.Reset();
+            base.Init();
 
-            if (_controller == null)
-            {
-                _controller = _manager.Owner.GetComponent<EyenomancerController>();
-                _spawner = _transform.GetComponentInChildren<SpawnerBase>();
-                _spawner.Spawned += (object sender, SpawnedEventArgs args) =>
-                {
-                    args.SpawnedObject.GetComponent<HealthSystem>().Death += OnSummonedEyeDeath;
-                };
-                _activeEyes = 0;
-            }
-
-            _timeTillSummon = _controller.SummonCooldown;
+            _controller = _manager.Owner.GetComponent<EyenomancerController>();
+            _spawner = _transform.GetComponentInChildren<SpawnerBase>();
+            _spawner.Spawned += OnEyeSpawn;
+            _activeEyes = 0;
         }
 
         private void Summon()
@@ -75,9 +72,14 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomance
             _timeTillSummon = _controller.SummonCooldown;
         }
 
-        private void OnSummonedEyeDeath(object sender, EventArgs args)
+        private void OnEyeDeath(object sender, EventArgs args)
         {
             --_activeEyes;
+        }
+
+        private void OnEyeSpawn(object sender, SpawnedEventArgs args)
+        {
+            args.SpawnedObject.GetComponent<HealthSystem>().Death += OnEyeDeath;
         }
     }
 }

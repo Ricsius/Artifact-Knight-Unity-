@@ -15,7 +15,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.EvilEye
 
         public override void OnSelect()
         {
-            CurrentDirection= Vector2.zero;
+            _manager.CurrentDirection = Vector2.zero;
             MovementStateManager.CurrentMovementState.StopMove();
         }
 
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.EvilEye
 
             if (playerTransform != null)
             {
-                InvokeBehaviourStateChangeRequest(ControllerBehaviourStateType.Aggro);
+                _manager.SetCurrentBehaviorState(ControllerBehaviourStateType.Aggro);
             }
         }
     }

@@ -1,5 +1,4 @@
 
-using Assets.Scripts.Detectors;
 using Assets.Scripts.Spawners;
 using System;
 using UnityEngine;
@@ -19,7 +18,9 @@ namespace Assets.Scripts.Environment.Checkpoint
         }
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            if (SpecialGameObjectRecognition.IsPlayer(collision.gameObject))
+            CheckpointManagerTarget target = collision.gameObject.GetComponent<CheckpointManagerTarget>();
+
+            if (target != null)
             {
                 Activate();
             }

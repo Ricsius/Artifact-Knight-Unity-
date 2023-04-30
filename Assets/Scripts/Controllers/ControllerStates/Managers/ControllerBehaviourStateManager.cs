@@ -1,6 +1,5 @@
 
 using Assets.Scripts.Controllers.ControllerStates.BehaviourStates;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,38 +7,26 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
 {
     public class ControllerBehaviourStateManager
     {
-        public float SightRange { get; set; }
+        public Vector2 CurrentDirection { get; set; }
+        public float SightRange { get; private set; }
         public ControllerBehaviourStateBase CurrentBehaviourState { get; private set; }
         public GameObject Owner { get; }
         private ControllerMovementStateManager _movementStateManager { get; }
 
         private Dictionary<ControllerBehaviourStateType, ControllerBehaviourStateBase> _behaviourStates = new Dictionary<ControllerBehaviourStateType, ControllerBehaviourStateBase>();
 
-        public ControllerBehaviourStateManager(GameObject owner, ControllerMovementStateManager movementStateManager) 
+        public ControllerBehaviourStateManager(GameObject owner, ControllerMovementStateManager movementStateManager, float sightRange) 
         {
             Owner = owner;
             _movementStateManager = movementStateManager;
+            SightRange = sightRange;
         }
 
-        public bool TrySetCurrentBehaviorState(ControllerBehaviourStateType type)
+        public void SetCurrentBehaviorState(ControllerBehaviourStateType type)
         {
-            if (!_behaviourStates.ContainsKey(type))
-            {
-                return false;
-            }
-
-            if (CurrentBehaviourState != null)
-            {
-                CurrentBehaviourState?.OnDeselect();
-                CurrentBehaviourState.BehaviourStateChangeRequest -= OnBehaviorStateChangeRequest;
-                _behaviourStates[type].CurrentDirection = CurrentBehaviourState.CurrentDirection;
-            }
-
+            CurrentBehaviourState?.OnDeselect();
             CurrentBehaviourState = _behaviourStates[type];
-            CurrentBehaviourState.BehaviourStateChangeRequest += OnBehaviorStateChangeRequest;
             CurrentBehaviourState.OnSelect();
-
-            return true;
         }
 
         public void Manage<T>() where T : ControllerBehaviourStateBase, new()
@@ -55,11 +42,6 @@ namespace Assets.Scripts.Controllers.ControllerStates.Managers
             {
                 CurrentBehaviourState = state;
             }
-        }
-
-        private void OnBehaviorStateChangeRequest(object sender, BehaviourStaceChangeRequestEventArgs args)
-        {
-            TrySetCurrentBehaviorState(args.BehaviourStateType);
         }
     }
 }

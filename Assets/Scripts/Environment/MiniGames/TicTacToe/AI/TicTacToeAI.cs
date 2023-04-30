@@ -1,9 +1,9 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -26,34 +26,73 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
         private TicTacToeGameState _gameState;
         [SerializeField]
         private float _actionDelay;
+        [SerializeField]
+        private TicTacToeAIStrategy _strategy;
+        private Dictionary<TicTacToeAIStrategy, Func<Position>> _actions;
+        private IEnumerable<Position> _selectedWinningPattern;
+
+        protected virtual void Awake()
+        {
+            _actions = new Dictionary<TicTacToeAIStrategy, Func<Position>>
+            {
+                {TicTacToeAIStrategy.Winning, WinningStrategy },
+                {TicTacToeAIStrategy.OpponentInhibiting, OpponentInhibitingStrategy }
+            };
+        }
 
         private void OnTurnElapsed(object sender, TurnElapsedEventArgs args)
         {
             if (ID == args.NextPlayerID)
             {
-                StartCoroutine(ActionWithDelay());
+                StartCoroutine(CalculateNextMove());
             }
         }
 
-        private IEnumerator ActionWithDelay()
+        private IEnumerator CalculateNextMove()
         {
             yield return new WaitForSeconds(_actionDelay);
 
-            _game.MarkTile(CalculateNextMove(), gameObject);
+            Position nextMove = _actions[_strategy]();
+
+            _game.MarkTile(nextMove, gameObject);
         }
 
-        private Position CalculateNextMove()
+        private Position WinningStrategy()
         {
-            //ToDo: Balance this!
-            Position opponentWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(OpponentID, _gameState));
+            if (_selectedWinningPattern == null || !IsWinningPatternPossible(ID, _gameState, _selectedWinningPattern))
+            {
+                IEnumerable<IEnumerable<Position>> myPossibleWinningPatterns = PossibleWinningPatterns(ID, _gameState);
+
+                if (!myPossibleWinningPatterns.Any())
+                {
+                    _selectedWinningPattern = null;
+
+                    return SelectRandomElement(_gameState.UnmarkedPositions);
+                }
+
+                IEnumerable<Position> myMarkedPositions = _gameState.GetMarkedPositions(ID);
+                Func<IEnumerable<Position>, int> getMyMarkCountOnPattern = (pattern) => pattern.Count(poz => myMarkedPositions.Contains(poz));
+                int maxMarkCount = myPossibleWinningPatterns.Max(pattern => getMyMarkCountOnPattern(pattern));
+                IEnumerable<IEnumerable < Position>> mostAdvancedPatterns = myPossibleWinningPatterns.Where(pattern => getMyMarkCountOnPattern(pattern) == maxMarkCount);
+
+                _selectedWinningPattern = SelectRandomElement(mostAdvancedPatterns);
+            }
+
+            IEnumerable<Position> unmarkedPositions = _selectedWinningPattern.Where(p => _gameState.UnmarkedPositions.Contains(p));
+
+            return SelectRandomElement(unmarkedPositions);
+        }
+
+        private Position OpponentInhibitingStrategy()
+        {
+            Position opponentWinningPatternCompleteingPosition = SelectRandomElement(FindWinningPatternCompleteingPositions(OpponentID, _gameState));
 
             if (opponentWinningPatternCompleteingPosition != null)
             {
-                //return opponentWinningPatternCompleteingPosition;
-                return SelectRandomPosition(_gameState.UnmarkedPositions);
+                return opponentWinningPatternCompleteingPosition;
             }
 
-            Position myWinningPatternCompleteingPosition = SelectRandomPosition(FindWinningPatternCompleteingPositions(ID, _gameState));
+            Position myWinningPatternCompleteingPosition = SelectRandomElement(FindWinningPatternCompleteingPositions(ID, _gameState));
 
             if (myWinningPatternCompleteingPosition != null)
             {
@@ -94,25 +133,25 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
 
             if (winAdvancingMoves.Any())
             {
-                return SelectRandomPosition(winAdvancingMoves);
+                return SelectRandomElement(winAdvancingMoves);
             }
 
             if (opponentInibitingMoves.Any())
             {
-                return SelectRandomPosition(opponentInibitingMoves);
+                return SelectRandomElement(opponentInibitingMoves);
             }
 
-            return SelectRandomPosition(_gameState.UnmarkedPositions);
+            return SelectRandomElement(_gameState.UnmarkedPositions);
         }
 
-        private Position SelectRandomPosition(IEnumerable<Position> positions)
+        private T SelectRandomElement<T>(IEnumerable<T> container) where T : class 
         {
-            if (positions == null || !positions.Any())
+            if (container == null || !container.Any())
             {
                 return null;
             }
 
-            Position[] arr = positions.ToArray();
+            T[] arr = container.ToArray();
             System.Random random = new System.Random();
             int randomIndex = random.Next(arr.Length);
 
@@ -148,7 +187,12 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe.AI
 
         private IEnumerable<IEnumerable<Position>> PossibleWinningPatterns(int playerID, TicTacToeGameState gameState)
         {
-            return gameState.WinningPatterns.Where(p => p.All(pos => gameState.GetMarkedPositions(playerID).Contains(pos) || gameState.UnmarkedPositions.Contains(pos)));
+            return gameState.WinningPatterns.Where(p => IsWinningPatternPossible(playerID, gameState, p));
+        }
+
+        private bool IsWinningPatternPossible(int playerID, TicTacToeGameState gameState, IEnumerable<Position> pattern)
+        {
+            return pattern.All(p => gameState.GetMarkedPositions(playerID).Contains(p) || gameState.UnmarkedPositions.Contains(p));
         }
     }
 }

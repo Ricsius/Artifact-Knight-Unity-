@@ -1,27 +1,25 @@
 
 using Assets.Scripts.Controllers.ControllerStates.BehaviourStates;
 using Assets.Scripts.Controllers.ControllerStates.Managers;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers
 {
     public class MobControllerBase : ControllerBase
     {
-        //ToDo: Stealing ghost
         [field: SerializeField]
-        public ControllerBehaviourStateType StartingBehaviorState { get; protected set; }
+        public ControllerBehaviourStateType StartingBehaviorState { get; private set; }
         [field: SerializeField]
         public float SightRange { get; set; }
-        
+        public EventHandler<SolidCollisionEventArgs> SolidCollision;
         protected ControllerBehaviourStateManager _behaviorStateManager;
 
         protected override void Awake()
         {
             base.Awake();
 
-            _behaviorStateManager = new ControllerBehaviourStateManager(gameObject, _movementStateManager);
-
-            _behaviorStateManager.SightRange = SightRange;
+            _behaviorStateManager = new ControllerBehaviourStateManager(gameObject, _movementStateManager, SightRange);
 
             tag = "Mob";
         }
@@ -30,7 +28,7 @@ namespace Assets.Scripts.Controllers
         {
             base.Start();
 
-            _behaviorStateManager.TrySetCurrentBehaviorState(StartingBehaviorState);
+            _behaviorStateManager.SetCurrentBehaviorState(StartingBehaviorState);
         }
 
         protected override void Update()
@@ -38,6 +36,11 @@ namespace Assets.Scripts.Controllers
             base.Update();
 
             _behaviorStateManager.CurrentBehaviourState.Behaviour();
+        }
+
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
+        {
+            SolidCollision?.Invoke(this, new SolidCollisionEventArgs(collision));
         }
     }
 }

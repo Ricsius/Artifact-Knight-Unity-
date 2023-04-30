@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Assets.Scripts.Controllers.ControllerStates.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
@@ -16,18 +13,18 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
 
         public override void OnSelect()
         {
-            InvokeAnimationParameterChangeRequest("IsIdlingInAir");
+            _manager.SetCurrentAnimationParameter(AnimationParameterName.IsIdlingInAir);
         }
 
         public override void Move(Vector2 direction)
         {
-            InvokeAnimationParameterChangeRequest("IsMovingInAir");
+            _manager.SetCurrentAnimationParameter(AnimationParameterName.IsMovingInAir);
             MoveLogic(direction);
         }
 
         public override void StopMove()
         {
-            InvokeAnimationParameterChangeRequest("IsIdlingInAir");
+            _manager.SetCurrentAnimationParameter(AnimationParameterName.IsIdlingInAir);
             StopMoveLogic();
         }
     }

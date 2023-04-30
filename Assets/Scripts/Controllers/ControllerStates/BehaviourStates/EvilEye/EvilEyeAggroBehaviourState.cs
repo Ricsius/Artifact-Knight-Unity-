@@ -19,13 +19,13 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.EvilEye
 
             if (playerTransform != null)
             {
-                CurrentDirection = (playerTransform.position - _transform.position).normalized;
+                _manager.CurrentDirection = (playerTransform.position - _transform.position).normalized;
 
-                MovementStateManager.CurrentMovementState.Move(CurrentDirection);
+                MovementStateManager.CurrentMovementState.Move(_manager.CurrentDirection);
             }
             else
             {
-                InvokeBehaviourStateChangeRequest(ControllerBehaviourStateType.Idle);
+                _manager.SetCurrentBehaviorState(ControllerBehaviourStateType.Idle);
             }
 
             

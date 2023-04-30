@@ -15,7 +15,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
         {
             _rigidBody.gravityScale = 0;
 
-            InvokeAnimationParameterChangeRequest("IsIdlingOnLadder");
+            _manager.SetCurrentAnimationParameter(AnimationParameterName.IsIdlingOnLadder);
             StopMove();
         }
 
@@ -28,11 +28,11 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
         {
             if (direction.x != 0 && direction.y == 0)
             {
-                InvokeAnimationParameterChangeRequest("IsIdlingOnLadder");
+                _manager.SetCurrentAnimationParameter(AnimationParameterName.IsIdlingOnLadder);
             }
             else
             {
-                InvokeAnimationParameterChangeRequest("IsMovingOnLadder");
+                _manager.SetCurrentAnimationParameter(AnimationParameterName.IsMovingOnLadder);
             }
 
 
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
 
         public override void StopMove()
         {
-            InvokeAnimationParameterChangeRequest("IsIdlingOnLadder");
+            _manager.SetCurrentAnimationParameter(AnimationParameterName.IsIdlingOnLadder);
             StopMoveLogic();
         }
     }

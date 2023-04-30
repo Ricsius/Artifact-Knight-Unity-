@@ -1,6 +1,5 @@
 
 using Assets.Scripts.Controllers.ControllerStates.Managers;
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
                 Init();
             }
         }
-        public event EventHandler<AnimationParameterChangeRequestEventArgs> AnimationParameterChangeRequest;
+
         protected Transform _transform;
         protected Rigidbody2D _rigidBody;
         protected Collider2D _collider;
@@ -52,31 +51,34 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
             float sign = ((_transform.eulerAngles.y > 0 && direction.x == 0) || direction.x < 0) ? 1 : 0;
             float rotationAngleY = sign * 180f;
             
-            Vector2 velocity = _rigidBody.velocity;
-
-            if (direction.x != 0 && direction.y == 0)
-            {
-                velocity = new Vector2(direction.x * _manager.MovementSpeed, _rigidBody.velocity.y);
-            }
-
-            if (direction.y != 0 && direction.x == 0)
-            {
-                velocity = new Vector2(_rigidBody.velocity.x, direction.y * _manager.MovementSpeed);
-            }
-
-            if (direction.x != 0 && direction.y != 0)
-            {
-                velocity = new Vector2(direction.x * _manager.MovementSpeed, direction.y * _manager.MovementSpeed);
-            }
-            
             _transform.eulerAngles = new Vector3(rotationAngleX, rotationAngleY, rotationAngleZ);
-            _rigidBody.velocity = velocity;
-            Vector2 boxCastSize = new Vector2(.01f, _collider.bounds.size.y);
-            RaycastHit2D[] raycastHits = Physics2D.BoxCastAll(_transform.position, boxCastSize, 0, _transform.right, _collider.bounds.extents.x + boxCastSize.x);
+            
+            RaycastHit2D[] raycastHits = Physics2D.BoxCastAll(_transform.position, _collider.bounds.size, 0, direction, .015f);
 
             if (raycastHits.Any(rh => rh.transform != _transform && !rh.collider.isTrigger))
             {
                 StopMove();
+            }
+            else
+            {
+                Vector2 velocity = _rigidBody.velocity;
+
+                if (direction.x != 0 && direction.y == 0)
+                {
+                    velocity = new Vector2(direction.x * _manager.MovementSpeed, _rigidBody.velocity.y);
+                }
+
+                if (direction.y != 0 && direction.x == 0)
+                {
+                    velocity = new Vector2(_rigidBody.velocity.x, direction.y * _manager.MovementSpeed);
+                }
+
+                if (direction.x != 0 && direction.y != 0)
+                {
+                    velocity = new Vector2(direction.x * _manager.MovementSpeed, direction.y * _manager.MovementSpeed);
+                }
+
+                _rigidBody.velocity = velocity;
             }
 
         }
@@ -91,11 +93,6 @@ namespace Assets.Scripts.Controllers.ControllerStates.MovementStates
             float y = _rigidBody.gravityScale > 0 ? _rigidBody.velocity.y : 0;
 
             _rigidBody.velocity = new Vector2(0, y);
-        }
-
-        protected void InvokeAnimationParameterChangeRequest(string parameterName)
-        {
-            AnimationParameterChangeRequest?.Invoke(this, new AnimationParameterChangeRequestEventArgs(parameterName));
         }
 
         protected virtual void Init()
