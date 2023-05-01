@@ -9,7 +9,7 @@ namespace Assets.Scripts.Environment.Checkpoint
 
         protected virtual void Awake()
         {
-            _checkpointManager = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
+            _checkpointManager = GameObject.Find("Checkpoint Manager").GetComponent<CheckpointManager>();
         }
 
         protected virtual void Start()

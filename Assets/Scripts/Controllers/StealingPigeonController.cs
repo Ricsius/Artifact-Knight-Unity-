@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Detectors;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers
@@ -11,7 +7,10 @@ namespace Assets.Scripts.Controllers
     {
         protected override void OnCollisionEnter2D(Collision2D collision)
         {
-            Destroy(gameObject);
+            if (SpecialGameObjectRecognition.IsPlayer(collision.gameObject))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -33,7 +33,6 @@ namespace Assets.Scripts.Controllers
         {
             base.Awake();
 
-            tag = "Player";
             _cameraTransform = GameObject.Find("Main Camera").transform;
             _equipment = GetComponent<EquipmentSystem>();
             _itemDetector = GetComponent<ItemDetector>();

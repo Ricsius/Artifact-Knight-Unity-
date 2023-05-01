@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Assets.Scripts.Ui.Indicators.Targets
 {
@@ -10,7 +6,7 @@ namespace Assets.Scripts.Ui.Indicators.Targets
     {
         protected override void Awake()
         {
-            _indicatorGroupObjectName = "PlayerIndicators";
+            _indicatorGroupObjectName = "Player Indicators";
 
             base.Awake();
         }
