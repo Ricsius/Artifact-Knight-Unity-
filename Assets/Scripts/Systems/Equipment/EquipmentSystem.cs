@@ -41,7 +41,7 @@ namespace Assets.Scripts.Systems.Equipment
             {
                 ItemBase cloneItem = Instantiate(item);
 
-                AddItem(cloneItem, false);
+                AddItem(cloneItem);
             }
         }
         
@@ -52,7 +52,29 @@ namespace Assets.Scripts.Systems.Equipment
 
         public void AddItem(ItemBase item)
         {
-            AddItem(item, true);
+            _inventory[item.Type].AddLast(item);
+
+            item.OnAddedToEquipment(gameObject);
+
+            if (item.Type == ItemType.Equipable)
+            {
+                Collider2D itemCollider = item.GetComponent<Collider2D>();
+                float sign = transform.right.x > 0f ? 1f : -1f;
+                Vector3 offset = sign * new Vector3(_collider.bounds.extents.x + itemCollider.bounds.extents.x, 0, 0);
+
+                item.transform.parent = transform;
+                item.transform.position = transform.position + offset;
+                item.transform.rotation = transform.rotation;
+
+                if (_inventory[ItemType.Equipable].Count == 1)
+                {
+                    EquipNextItem();
+                }
+            }
+
+            NewItemAdded?.Invoke(this, new ItemEventArgs(item));
+
+            item.Hide();
         }
 
         public void RemoveItem(ItemBase item)
@@ -124,36 +146,6 @@ namespace Assets.Scripts.Systems.Equipment
         public void StopUseEquipedItem()
         {
             EquipedItem?.Hide();
-        }
-
-        private void AddItem(ItemBase item, bool invokeEvent)
-        {
-            _inventory[item.Type].AddLast(item);
-
-            item.OnAddedToEquipment(gameObject);
-
-            if (item.Type == ItemType.Equipable)
-            {
-                Collider2D itemCollider = item.GetComponent<Collider2D>();
-                float sign = transform.right.x > 0f ? 1f : -1f;
-                Vector3 offset = sign * new Vector3(_collider.bounds.extents.x + itemCollider.bounds.extents.x, 0, 0);
-
-                item.transform.parent = transform;
-                item.transform.position = transform.position + offset;
-                item.transform.rotation = transform.rotation;
-
-                if (_inventory[ItemType.Equipable].Count == 1)
-                {
-                    EquipNextItem();
-                }
-            }
-
-            if (invokeEvent)
-            {
-                NewItemAdded?.Invoke(this, new ItemEventArgs(item));
-            }
-
-            item.Hide();
         }
 
         private void UnEquipEquipedItem()

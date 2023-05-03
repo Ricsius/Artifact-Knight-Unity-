@@ -36,11 +36,15 @@ namespace Assets.Scripts.Systems.Score
         private void OnNewItemAdded(object sender, ItemEventArgs args)
         {
             ItemBase item= args.Item;
-            ScoreEntry entry = new ScoreEntry(item.name, item.ScoreValue);
 
-            _entries.Add(entry);
+            if (item.ScoreValue != 0)
+            {
+                ScoreEntry entry = new ScoreEntry(item.name, item.ScoreValue);
 
-            ScoreChanged?.Invoke(this, new ScoreChangeEventArgs(ScoreSum));
+                _entries.Add(entry);
+
+                ScoreChanged?.Invoke(this, new ScoreChangeEventArgs(ScoreSum));
+            }
         }
 
         private void OnItemRemoved(object sender, ItemEventArgs args)

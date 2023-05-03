@@ -1,5 +1,4 @@
 using Assets.Scripts.Detectors;
-using Assets.Scripts.Projectiles;
 using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable

@@ -2232,6 +2232,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5947239740671754554, guid: ac3eff9a833048d4c9e344d5c3e46b9b, type: 3}
+      propertyPath: _checkpointManager
+      value: 
+      objectReference: {fileID: 261022629971754647}
     - target: {fileID: 6090240332534548164, guid: ac3eff9a833048d4c9e344d5c3e46b9b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3557,6 +3561,17 @@ PrefabInstance:
       objectReference: {fileID: 1040726415}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1fe4c2ee53d13344a8a890a77749b8a, type: 3}
+--- !u!114 &261022629971754647 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 261022628670636607, guid: f1fe4c2ee53d13344a8a890a77749b8a, type: 3}
+  m_PrefabInstance: {fileID: 261022629971754646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252d2d770c1f89940bef15dc66b3cf75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &593189262127543252
 PrefabInstance:
   m_ObjectHideFlags: 0

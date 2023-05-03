@@ -210,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _preparedItems:
   - {fileID: 4501712651416146640, guid: a0ac987680dd4fe4c9bfacf18e47396b, type: 3}
+  - {fileID: 2410881660885974919, guid: a23b538707a62e74a99972a98502dd43, type: 3}
 --- !u!114 &4688363125146883206
 MonoBehaviour:
   m_ObjectHideFlags: 0

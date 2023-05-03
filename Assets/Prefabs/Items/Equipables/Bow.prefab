@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3356b947aefa04940b6c9bd67b5b4a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ScoreValue>k__BackingField: 100
+  <ScoreValue>k__BackingField: 0
   <Cooldown>k__BackingField: 2
 --- !u!1 &6785852303971156431
 GameObject:
