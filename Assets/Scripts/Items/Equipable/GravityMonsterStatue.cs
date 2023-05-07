@@ -20,6 +20,9 @@ namespace Assets.Scripts.Items.Equipable
         {
             base.OnRemovedFromEquipment();
 
+            _ownerRigidbody.gravityScale = 1;
+            _ownerTransform.rotation= Quaternion.identity;
+
             _ownerTransform = null;
             _ownerRigidbody = null;
         }
