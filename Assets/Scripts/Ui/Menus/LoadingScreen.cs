@@ -1,7 +1,9 @@
-
 using Assets.Scripts.Systems.Score;
+using Assets.Scripts.Systems.Score.Storage;
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Ui.Menus
@@ -18,6 +20,8 @@ namespace Assets.Scripts.Ui.Menus
         private GameObject _scoreEntryPrefab;
         [SerializeField]
         private GameObject _scoreSum;
+        [SerializeField]
+        private TMP_InputField _playerNameInput;
         [SerializeField]
         private GameObject _continueButton;
 
@@ -55,12 +59,29 @@ namespace Assets.Scripts.Ui.Menus
                 _scoreSum.GetComponentInChildren<TextMeshProUGUI>().text = Score.ScoreSum.ToString();
 
                 _scoreSum.SetActive(true);
+                _playerNameInput.gameObject.SetActive(true);
             }
         }
 
         public void StartNextLevel()
         {
             LoadingOperation.allowSceneActivation = true;
+        }
+
+        public void InsertPlayerScoreIntoDatabase()
+        {
+            if (!string.IsNullOrEmpty(_playerNameInput.text))
+            {
+                PlayerScore entry = new PlayerScore()
+                {
+                    LevelName = SceneManager.GetActiveScene().name,
+                    PlayerName = _playerNameInput.text,
+                    Score = Score.ScoreSum,
+                    Date = DateTime.Now
+                };
+
+                ScoreStorage.AddScore(entry);
+            }
         }
     }
 }

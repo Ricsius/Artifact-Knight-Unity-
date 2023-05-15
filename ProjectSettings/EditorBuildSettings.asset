@@ -8,10 +8,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: af8d0b56684a9d142ac00a81cf2522c7
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Scenes/Level 1.unity
+    guid: 368f88ddb1872cc49a6502b57cebd230
+  - enabled: 0
     path: Assets/Scenes/Level 2.unity
     guid: ea7e99e69c2188842a9bea2188513477
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test/Manual Testing.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Test/Gravity Monster Statue Item Test.unity
+    guid: b5d8cf7ff790e8748b2e81ece5eb8f31
+  - enabled: 1
+    path: Assets/Scenes/Test/Green Knight Test.unity
+    guid: b8b02e001d7172c41a24bf6d7752951a
+  - enabled: 1
+    path: Assets/Scenes/Test/TicTacToe Test.unity
+    guid: c771ff9101492a649affe5bbdc9c8779
   m_configObjects: {}

@@ -9,11 +9,10 @@ using UnityEngine;
 using Assets.Scripts.Systems.Equipment;
 using System;
 using System.Linq;
-using Unity.VisualScripting;
 
 namespace Assets.Scripts.Controllers.Test
 {
-    public class TestSceneController : ControllerBase
+    public class TestEntityController : ControllerBase
     {
         private EquipmentSystem _equipment;
         private ItemDetector _itemDetector;

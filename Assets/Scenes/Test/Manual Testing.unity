@@ -2895,28 +2895,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1629165119}
   - component: {fileID: 1629165118}
-  - component: {fileID: 1629165117}
+  - component: {fileID: 1629165120}
   m_Layer: 0
-  m_Name: Teleporter
+  m_Name: Killzone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1629165117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629165116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535f4495947c914458f4159afac9c3d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerTransform: {fileID: 0}
-  Position: {x: -4.5, y: 1.5}
 --- !u!61 &1629165118
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2958,6 +2944,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1629165120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629165116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c796172b7ce573b48b3a07b7c0492b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HealthEffect>k__BackingField: 999
 --- !u!4 &1726646747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5099272811658248697, guid: c4942005ae596414181c2ba75abbc924, type: 3}

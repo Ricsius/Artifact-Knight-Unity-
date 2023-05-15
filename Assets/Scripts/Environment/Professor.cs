@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Items;
+﻿
+using Assets.Scripts.Items;
 using Assets.Scripts.Systems.Equipment;
 using Assets.Scripts.Systems.Score;
 using UnityEngine;
@@ -32,7 +33,8 @@ namespace Assets.Scripts.Environment
                 ScoreSystem score = equipment.GetComponent<ScoreSystem>();
 
                 _sceneLoader.LoadNextScene(score);
-                
+
+                equipment.gameObject.SetActive(false);
             }
             else
             {

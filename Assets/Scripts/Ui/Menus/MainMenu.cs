@@ -6,7 +6,9 @@ namespace Assets.Scripts.Ui.Menus
 {
     public class MainMenu : MonoBehaviour
     {
-        SceneLoader _sceneLoader;
+        private SceneLoader _sceneLoader;
+        [SerializeField]
+        private GameObject _highScoreMenu;
 
         protected virtual void Awake()
         {
@@ -16,6 +18,12 @@ namespace Assets.Scripts.Ui.Menus
         public void LoadFirstLevel()
         {
             _sceneLoader.LoadNextScene();
+        }
+
+        public void ShowHighScore()
+        {
+            _highScoreMenu.SetActive(true);
+            gameObject.SetActive(false);
         }
 
         public void Quit()

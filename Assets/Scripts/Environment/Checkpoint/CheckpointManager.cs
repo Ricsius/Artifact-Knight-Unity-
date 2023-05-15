@@ -14,6 +14,7 @@ namespace Assets.Scripts.Environment.Checkpoint
         private LinkedList<GameObject> _targets;
         private GameObject _currentTarget;
         private HealthSystem _targetHealthSystem;
+        private Rigidbody2D _targetRigidbody;
         private Vector2 _lastActiveChackpointPosition;
 
         protected void Awake()
@@ -56,6 +57,7 @@ namespace Assets.Scripts.Environment.Checkpoint
             {
                 _currentTarget.transform.position = _lastActiveChackpointPosition;
                 _currentTarget.transform.rotation = Quaternion.identity;
+                _targetRigidbody.gravityScale = 1;
                 _targetHealthSystem.Heal(_targetHealthSystem.MaxHealthPoints);
 
                 _currentTarget.SetActive(true);
@@ -91,6 +93,7 @@ namespace Assets.Scripts.Environment.Checkpoint
 
         private void SetUpCurrentTarget()
         {
+            _targetRigidbody = _currentTarget?.GetComponent<Rigidbody2D>();
             _targetHealthSystem = _currentTarget?.GetComponent<HealthSystem>();
 
             if (_targetHealthSystem != null)
