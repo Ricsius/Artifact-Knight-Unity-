@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Environment.MiniGames.TicTacToe.AI.SimulationEvaluation">
+    <Position X="0.5" Y="0.5" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\AI\SimulationEvaluation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.MiniGames.TicTacToe.AI.TicTacToeAI">
+    <Position X="0.5" Y="2.5" Width="7" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAJABAAgAAASAEAAAAQAAgABAAAQAgBAAAAGEQ=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\AI\TicTacToeAI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Assets.Scripts.Environment.MiniGames.TicTacToe.AI.TicTacToeAIStrategy">
+    <Position X="7.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\AI\TicTacToeAIStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

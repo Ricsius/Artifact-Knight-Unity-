@@ -11,7 +11,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
     public class TicTacToe : MonoBehaviour
     {
         public TicTacToeGameState GameState { get; private set; }
-        public EventHandler<TurnElapsedEventArgs> TurnElapsed;
+        public event EventHandler<TurnElapsedEventArgs> TurnElapsed;
         [SerializeField]
         private Transform _rows;
         [SerializeField]

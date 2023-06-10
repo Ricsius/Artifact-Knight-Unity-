@@ -1,6 +1,6 @@
 ﻿
 
-namespace Assets.Scripts.Ui.Indicators.Targets
+namespace Assets.Scripts.UI.Indicators.Targets
 {
     public class BossIndicatorGroupTarget : IndicatorGroupTargetBase
     {

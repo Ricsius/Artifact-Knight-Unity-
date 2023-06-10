@@ -1,7 +1,10 @@
 
-public enum ItemType
+namespace Assets.Scripts.Items
 {
-    Equipable,
-    Key,
-    Bonus
+    public enum ItemType
+    {
+        Equipable,
+        Key,
+        Bonus
+    }
 }

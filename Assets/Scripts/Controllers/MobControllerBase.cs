@@ -12,7 +12,7 @@ namespace Assets.Scripts.Controllers
         public ControllerBehaviourStateType StartingBehaviorState { get; private set; }
         [field: SerializeField]
         public float SightRange { get; set; }
-        public EventHandler<SolidCollisionEventArgs> SolidCollision;
+        public event EventHandler<SolidCollisionEventArgs> SolidCollision;
         protected ControllerBehaviourStateManager _behaviorStateManager;
 
         protected override void Awake()

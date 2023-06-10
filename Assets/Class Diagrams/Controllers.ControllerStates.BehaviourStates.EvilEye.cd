@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Controllers.ControllerStates.BehaviourStates.EvilEye.EvilEyeAggroBehaviourState">
+    <Position X="2.25" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Controllers\ControllerStates\BehaviourStates\EvilEye\EvilEyeAggroBehaviourState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Controllers.ControllerStates.BehaviourStates.EvilEye.EvilEyeIdleBehaviourState">
+    <Position X="5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\Scripts\Controllers\ControllerStates\BehaviourStates\EvilEye\EvilEyeIdleBehaviourState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

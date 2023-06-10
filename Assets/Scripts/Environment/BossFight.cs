@@ -2,8 +2,8 @@ using Assets.Scripts.Detectors;
 using Assets.Scripts.Items;
 using Assets.Scripts.Spawners;
 using Assets.Scripts.Systems.Health;
-using Assets.Scripts.Ui.Indicators;
-using Assets.Scripts.Ui.Indicators.Targets;
+using Assets.Scripts.UI.Indicators;
+using Assets.Scripts.UI.Indicators.Targets;
 using System;
 using UnityEngine;
 

@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts.Controllers;
 using Assets.Scripts.Detectors;
 using Assets.Scripts.Environment.Checkpoint;
-using Assets.Scripts.Ui.Indicators;
-using Assets.Scripts.Ui.Indicators.Targets;
+using Assets.Scripts.UI.Indicators;
+using Assets.Scripts.UI.Indicators.Targets;
 using UnityEngine;
 
 namespace Assets.Scripts.Systems.Health

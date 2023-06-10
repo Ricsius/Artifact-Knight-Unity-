@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Indicators
+namespace Assets.Scripts.UI.Indicators
 {
     public abstract class IndicatorBase : MonoBehaviour
     {

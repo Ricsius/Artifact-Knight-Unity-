@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Ui.Menus
+namespace Assets.Scripts.UI.Menus
 {
     public class LoadingScreen : MonoBehaviour
     {

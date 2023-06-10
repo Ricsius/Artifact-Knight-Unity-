@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Environment.Checkpoint.Checkpoint">
+    <Position X="1.25" Y="1.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAEAAAAAgCAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\Checkpoint\Checkpoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.Checkpoint.CheckpointManager">
+    <Position X="5" Y="1.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEEAACQAVAAABAAAAAAIAAABABAAAAgAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\Checkpoint\CheckpointManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.Checkpoint.CheckpointManagerTarget">
+    <Position X="1.25" Y="5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAACAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\Checkpoint\CheckpointManagerTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

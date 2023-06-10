@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4688363125146883224, guid: 6d123111c19850c499e4769a19979366, type: 3}
+      propertyPath: <StartingMovementState>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4688363125789352214, guid: 6d123111c19850c499e4769a19979366, type: 3}
       propertyPath: m_RootOrder
       value: 2

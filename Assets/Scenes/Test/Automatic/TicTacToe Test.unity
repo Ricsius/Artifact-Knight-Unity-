@@ -169,11 +169,6 @@ Transform:
   m_Father: {fileID: 935133612}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &697264134 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4291216314931175870, guid: 0a9fcaf26b205fe478e3f8cec451ab9c, type: 3}
-  m_PrefabInstance: {fileID: 1781740645}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &697264136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4291216314931175869, guid: 0a9fcaf26b205fe478e3f8cec451ab9c, type: 3}
@@ -320,9 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8204b7d9074002e4798224500fc971a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: TicTacToe Turn Elapsed
-  _subjects:
-  - {fileID: 697264134}
+  <Name>k__BackingField: TicTacToe turn elapsed
+  _subject: {fileID: 1781740646}
   _requiredElapsedTurns: 8
 --- !u!4 &1172302806
 Transform:
@@ -496,6 +490,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a9fcaf26b205fe478e3f8cec451ab9c, type: 3}
+--- !u!1 &1781740646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4291216314931175870, guid: 0a9fcaf26b205fe478e3f8cec451ab9c, type: 3}
+  m_PrefabInstance: {fileID: 1781740645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1834082585
 PrefabInstance:
   m_ObjectHideFlags: 0

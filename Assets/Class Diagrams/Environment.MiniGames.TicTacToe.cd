@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Environment.MiniGames.TicTacToe.TicTacToe">
+    <Position X="5.5" Y="3.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAgAAQAAAEBAAEmgAgAEAAEAggAAAAAFAAAAAAABoEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\TicTacToe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.MiniGames.TicTacToe.TicTacToeGameState">
+    <Position X="1" Y="4" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAhAgABAACAAABAgAggAACAAAAAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\TicTacToeGameState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.MiniGames.TicTacToe.TicTacToeTile">
+    <Position X="1.25" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAgAAEAAAAAEEAAAAAQAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\TicTacToeTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.MiniGames.TicTacToe.TileMarkEventArgs">
+    <Position X="5.5" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Environment\MiniGames\TicTacToe\TileMarkEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

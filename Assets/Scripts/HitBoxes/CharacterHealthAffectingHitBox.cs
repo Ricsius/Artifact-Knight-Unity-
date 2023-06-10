@@ -12,17 +12,17 @@ namespace Assets.Scripts.HitBoxes
         {
             HealthSystem healthSystem = collision.gameObject.GetComponent<HealthSystem>();
 
-            HealthAffecting(HealthEffect, healthSystem);
+            HealthAffecting(healthSystem);
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collider)
         {
             HealthSystem healthSystem = collider.gameObject.GetComponent<HealthSystem>();
 
-            HealthAffecting(HealthEffect, healthSystem);
+            HealthAffecting(healthSystem);
         }
 
-        protected virtual void HealthAffecting(int amount, HealthSystem healthSystem)
+        protected virtual void HealthAffecting(HealthSystem healthSystem)
         {
             if (healthSystem != null)
             {

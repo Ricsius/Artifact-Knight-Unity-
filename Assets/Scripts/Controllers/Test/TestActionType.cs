@@ -8,7 +8,6 @@ namespace Assets.Scripts.Controllers.Test
         MoveDown,
         MoveLeft,
         MoveRight,
-        Interact,
         UseEquippedItem,
         StopUseEquippedItem
     }

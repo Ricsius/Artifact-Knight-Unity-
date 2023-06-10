@@ -20,7 +20,8 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Dragon
 
             if (playerTransform != null && !_equipmentSystem.EquipedItem.IsOnCooldown)
             {
-                _equipmentSystem.UseEquipedItem();
+                _equipmentSystem.UseEquippedItem();
+                _equipmentSystem.StopUseEquippedItem();
             }
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Indicators
+namespace Assets.Scripts.UI.Indicators
 {
     public class IndicatorGroup : MonoBehaviour
     {

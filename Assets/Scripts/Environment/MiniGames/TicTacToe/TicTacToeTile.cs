@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Detectors;
+﻿
 using Assets.Scripts.Items.Equipable;
 using System;
 using UnityEngine;
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Environment.MiniGames.TicTacToe
             }
         }
 
-        public EventHandler<TileMarkEventArgs> MarkRequested;
+        public event EventHandler<TileMarkEventArgs> MarkRequested;
         private SpriteRenderer _spriteRenderer;
 
         protected virtual void Awake()

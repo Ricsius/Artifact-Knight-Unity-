@@ -2,7 +2,7 @@
 using Assets.Scripts.Environment.Checkpoint;
 using Assets.Scripts.Spawners;
 using Assets.Scripts.Systems.Health;
-using Assets.Scripts.Ui.Indicators.Targets;
+using Assets.Scripts.UI.Indicators.Targets;
 using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable

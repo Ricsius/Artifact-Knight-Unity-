@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.TestScenario.Requirement.CollisionTestRequirement">
+    <Position X="1.25" Y="6.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAACAAAAAAAAAEAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TestScenario\Requirement\CollisionTestRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.TestScenario.Requirement.DeathTestRequirement">
+    <Position X="4.75" Y="6.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAIAAIAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\TestScenario\Requirement\DeathTestRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.TestScenario.Requirement.SpawnTestRequirement">
+    <Position X="12.75" Y="6.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAgAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAEA=</HashCode>
+      <FileName>Assets\Scripts\TestScenario\Requirement\SpawnTestRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.TestScenario.Requirement.TestRequirementBase">
+    <Position X="8" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAQAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TestScenario\Requirement\TestRequirementBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.TestScenario.Requirement.TicTacToeTurnElapsedTestRequirement">
+    <Position X="8.25" Y="6.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAAAQAABAAAEA=</HashCode>
+      <FileName>Assets\Scripts\TestScenario\Requirement\TicTacToeTurnElapsedTestRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

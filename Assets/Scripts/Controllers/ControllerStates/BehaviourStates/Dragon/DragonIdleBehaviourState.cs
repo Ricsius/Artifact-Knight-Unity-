@@ -19,7 +19,7 @@ namespace Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Dragon
 
         public override void Behaviour()
         {
-            Transform playerTransform = DetectGameObjectsInCircle().FirstOrDefault(o => SpecialGameObjectRecognition.IsPlayer(o))?.transform;
+            Transform playerTransform = DetectGameObjectsFront().FirstOrDefault(o => SpecialGameObjectRecognition.IsPlayer(o))?.transform;
 
             if (playerTransform != null)
             {

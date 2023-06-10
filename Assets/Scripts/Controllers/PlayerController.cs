@@ -94,12 +94,12 @@ namespace Assets.Scripts.Controllers
 
             if (Input.GetKeyDown(_useItemKey))
             {
-                _equipment.UseEquipedItem();
+                _equipment.UseEquippedItem();
             }
 
             if (Input.GetKeyUp(_useItemKey))
             {
-                _equipment.StopUseEquipedItem();
+                _equipment.StopUseEquippedItem();
             }
         }
         protected virtual void FixedUpdate()

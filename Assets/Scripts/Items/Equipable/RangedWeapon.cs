@@ -2,8 +2,6 @@
 using Assets.Scripts.Detectors;
 using Assets.Scripts.Projectiles;
 using Assets.Scripts.Spawners;
-using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Items.Equipable
 {

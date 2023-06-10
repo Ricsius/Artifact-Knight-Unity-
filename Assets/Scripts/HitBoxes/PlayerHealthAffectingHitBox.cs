@@ -6,11 +6,11 @@ namespace Assets.Scripts.HitBoxes
 {
     public class PlayerHealthAffectingHitBox : CharacterHealthAffectingHitBox
     {
-        protected override void HealthAffecting(int amount, HealthSystem healthSystem)
+        protected override void HealthAffecting(HealthSystem healthSystem)
         {
             if (healthSystem != null && SpecialGameObjectRecognition.IsPlayer(healthSystem.gameObject))
             {
-                base.HealthAffecting(amount, healthSystem);
+                base.HealthAffecting(healthSystem);
             }
         }
     }

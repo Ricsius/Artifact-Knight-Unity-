@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Systems.Health;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Ui.Indicators
+namespace Assets.Scripts.UI.Indicators
 {
     public class TransformationTimeIndicator : IndicatorBase<TransformationHealthSystem>
     {
@@ -10,10 +10,6 @@ namespace Assets.Scripts.Ui.Indicators
         protected virtual void Awake() 
         {
             _slider= GetComponent<Slider>();
-        }
-
-        protected virtual void Start()
-        {
         }
 
         protected virtual void Update()

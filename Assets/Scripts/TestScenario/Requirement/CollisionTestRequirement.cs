@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TestScenario.Requirement
 {
-    public class CollisionRequirement : TestRequirementBase
+    public class CollisionTestRequirement : TestRequirementBase
     {
         private bool _subjectCollided;
         public override bool Check()

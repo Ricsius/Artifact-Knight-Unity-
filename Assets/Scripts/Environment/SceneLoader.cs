@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Systems.Score;
-using Assets.Scripts.Ui.Menus;
+using Assets.Scripts.UI.Menus;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

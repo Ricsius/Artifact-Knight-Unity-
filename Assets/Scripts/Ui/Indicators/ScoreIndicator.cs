@@ -2,7 +2,7 @@
 using Assets.Scripts.Systems.Score;
 using TMPro;
 
-namespace Assets.Scripts.Ui.Indicators
+namespace Assets.Scripts.UI.Indicators
 {
     public class ScoreIndicator : IndicatorBase<ScoreSystem>
     {

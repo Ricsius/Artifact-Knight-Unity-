@@ -48,9 +48,8 @@ namespace Assets.Scripts.Controllers.Test
                 { TestActionType.MoveDown, () => _movementStateManager.CurrentMovementState.Move(Vector2.down) },
                 { TestActionType.MoveLeft, () => _movementStateManager.CurrentMovementState.Move(Vector2.left) },
                 { TestActionType.MoveRight, () => _movementStateManager.CurrentMovementState.Move(Vector2.right) },
-                { TestActionType.Interact, Interact },
-                { TestActionType.UseEquippedItem, () => _equipment?.UseEquipedItem() },
-                { TestActionType.StopUseEquippedItem, () => _equipment?.StopUseEquipedItem() },
+                { TestActionType.UseEquippedItem, () => _equipment.UseEquippedItem() },
+                { TestActionType.StopUseEquippedItem, () => _equipment.StopUseEquippedItem() },
             };
 
             _currentActionIndex =  -1;
@@ -82,36 +81,6 @@ namespace Assets.Scripts.Controllers.Test
             _currentActionIndex = (_currentActionIndex + 1) % _actions.Count;
             _currentAction= _actions[_currentActionIndex];
             _timeTillNextAction = _currentAction.Duration;
-        }
-
-        private void Interact()
-        {
-            ItemBase item = _itemDetector?.Detect();
-
-            if (item != null)
-            {
-                _equipment.AddItem(item);
-            }
-
-            if (_ladderDetector != null && _ladderDetector.Detect().Any())
-            {
-                _movementStateManager.TrySetCurrentMovementState(ControllerMovementStateType.OnLadder);
-            }
-
-            Door door = _doorDetector?.Detect();
-
-            if (door != null)
-            {
-                KeyItem key = _equipment.GetKey(door.KeyTypeToOpen);
-
-                if (key != null)
-                {
-                    door.TryOpen(key);
-                }
-            }
-
-            _professorDetector?.Detect()?.CheckEquipment(_equipment);
-            _chestDetector?.Detect()?.Open();
         }
     }
 }

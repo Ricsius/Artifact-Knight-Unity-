@@ -1,7 +1,7 @@
 using Assets.Scripts.Systems.Health;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Indicators
+namespace Assets.Scripts.UI.Indicators
 {
     public class HealthIndicator : IndicatorBase<HealthSystem>
     {

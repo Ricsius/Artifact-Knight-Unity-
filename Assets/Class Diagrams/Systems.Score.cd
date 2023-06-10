@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Systems.Score.ScoreChangeEventArgs">
+    <Position X="1.75" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Systems\Score\ScoreChangeEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Systems.Score.ScoreEntry">
+    <Position X="9" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgEAAAAAAQAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\Systems\Score\ScoreEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Systems.Score.ScoreSystem">
+    <Position X="4.75" Y="1" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAACEAAAAAAABAAAAAAgAIAAAAEAAACEE=</HashCode>
+      <FileName>Assets\Scripts\Systems\Score\ScoreSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

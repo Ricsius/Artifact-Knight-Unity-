@@ -2,7 +2,7 @@ using Assets.Scripts.Environment;
 using Assets.Scripts.Environment.Checkpoint;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Menus
+namespace Assets.Scripts.UI.Menus
 {
     public class PauseMenu : MonoBehaviour
     {

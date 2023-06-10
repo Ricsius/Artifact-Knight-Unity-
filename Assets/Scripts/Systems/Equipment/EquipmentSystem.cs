@@ -12,16 +12,17 @@ namespace Assets.Scripts.Systems.Equipment
     public class EquipmentSystem : MonoBehaviour
     {
         public EquipableItem EquipedItem => _equippedItemNode?.Value as EquipableItem;
-        public EventHandler<ItemEventArgs> NewItemEquipped;
-        public EventHandler<ItemEventArgs> NewItemAdded;
-        public EventHandler<ItemEventArgs> ItemRemoved;
+        public event EventHandler<ItemEventArgs> NewItemEquipped;
+        public event EventHandler<ItemEventArgs> NewItemAdded;
+        public event EventHandler<ItemEventArgs> ItemRemoved;
         private Collider2D _collider;
         private SpriteRenderer _spriteRenderer;
         private LinkedListNode<ItemBase> _equippedItemNode;
-        private SpriteRenderer _equipedItemRenderer;
+        private SpriteRenderer _equippedItemRenderer;
         private Dictionary<ItemType, LinkedList<ItemBase>> _inventory;
         [SerializeField]
         private List<ItemBase> _preparedItems;
+        private bool _equippedItemInUse;
 
         protected virtual void Awake()
         {
@@ -47,7 +48,7 @@ namespace Assets.Scripts.Systems.Equipment
         
         protected virtual void OnDisable() 
         {
-            StopUseEquipedItem();
+            StopUseEquippedItem();
         }
 
         public void AddItem(ItemBase item)
@@ -88,7 +89,7 @@ namespace Assets.Scripts.Systems.Equipment
 
                 if (item == EquipedItem)
                 {
-                    UnEquipEquipedItem();
+                    UnEquipEquippedItem();
                     EquipNextItem();
                 }
 
@@ -125,33 +126,36 @@ namespace Assets.Scripts.Systems.Equipment
                     _equippedItemNode = nextNode == null ? equipableItems.First : nextNode;
                 }
 
-                _equipedItemRenderer = EquipedItem.GetComponent<SpriteRenderer>();
+                _equippedItemRenderer = EquipedItem.GetComponent<SpriteRenderer>();
             }
 
             NewItemEquipped?.Invoke(this, new ItemEventArgs(EquipedItem));
         }
 
-        public void UseEquipedItem()
+        public void UseEquippedItem()
         {
-            if (EquipedItem != null)
+            if (EquipedItem != null && !_equippedItemInUse)
             {
                 EquipedItem.Reveal();
 
-                _equipedItemRenderer.sortingOrder = _spriteRenderer.sortingOrder;
+                _equippedItemRenderer.sortingOrder = _spriteRenderer.sortingOrder;
 
                 EquipedItem.Use();
+
+                _equippedItemInUse = true;
             }
         }
 
-        public void StopUseEquipedItem()
+        public void StopUseEquippedItem()
         {
             EquipedItem?.Hide();
+            _equippedItemInUse = false;
         }
 
-        private void UnEquipEquipedItem()
+        private void UnEquipEquippedItem()
         {
             _equippedItemNode = null;
-            _equipedItemRenderer = null;
+            _equippedItemRenderer = null;
         }
     }
 }

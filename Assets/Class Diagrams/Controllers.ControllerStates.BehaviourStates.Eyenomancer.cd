@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomancer.EyenomancerAggroBehaviourState">
+    <Position X="1.25" Y="2" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAwAEAAAAAAAAAAAAAAAAAACAACAACAEABIAA=</HashCode>
+      <FileName>Assets\Scripts\Controllers\ControllerStates\BehaviourStates\Eyenomancer\EyenomancerAggroBehaviourState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Controllers.ControllerStates.BehaviourStates.Eyenomancer.EyenomancerIdleBehaviourState">
+    <Position X="5.5" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\Scripts\Controllers\ControllerStates\BehaviourStates\Eyenomancer\EyenomancerIdleBehaviourState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

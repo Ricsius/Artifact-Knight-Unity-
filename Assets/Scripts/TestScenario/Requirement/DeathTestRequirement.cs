@@ -4,7 +4,7 @@ using System;
 
 namespace Assets.Scripts.TestScenario.Requirement
 {
-    public class DeathRequirement : TestRequirementBase
+    public class DeathTestRequirement : TestRequirementBase
     {
         bool _subjectDead;
         public virtual void Awake()

@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.Ui.Menus
+namespace Assets.Scripts.UI.Menus
 {
     public class HighScoreMenu : MonoBehaviour
     {

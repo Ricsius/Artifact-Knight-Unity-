@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Spawners.DeathSpawner">
+    <Position X="1.5" Y="4.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAACAIAAAAAAAACEA=</HashCode>
+      <FileName>Assets\Scripts\Spawners\DeathSpawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Spawners.SpawnedEventArgs">
+    <Position X="7" Y="1.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Spawners\SpawnedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Spawners.SpawnerBase">
+    <Position X="3.5" Y="1.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAgIAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Spawners\SpawnerBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Spawners.TimedSpawner">
+    <Position X="5.25" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAABgAAAAAAEAAAAAAAAAAAAAAAAAAAMAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Spawners\TimedSpawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

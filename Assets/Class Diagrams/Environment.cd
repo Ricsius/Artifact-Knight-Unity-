@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Assets.Scripts.Environment.BossFight">
+    <Position X="0.5" Y="1" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAQACAAAAAAAAAAAAAAAAAQMAAAAAACAAAAAAQgEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\BossFight.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.Chest">
+    <Position X="5" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAIAAACAAAAAAAABAAAAAAAAAAACAAAEg=</HashCode>
+      <FileName>Assets\Scripts\Environment\Chest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.Door">
+    <Position X="8.25" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\Door.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.IdeaBubble">
+    <Position X="1" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAAAAAAAAAQAAAEAAAAAAAAAAQAAAAAAAACEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\IdeaBubble.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.Professor">
+    <Position X="4.25" Y="5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAAACAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Environment\Professor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Environment.SceneLoader">
+    <Position X="8.5" Y="4.75" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAQAAAACAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Environment\SceneLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

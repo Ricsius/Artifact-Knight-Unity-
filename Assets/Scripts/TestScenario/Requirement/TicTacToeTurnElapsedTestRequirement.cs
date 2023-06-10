@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TestScenario.Requirement
 {
-    public class TicTacToeTurnElapsedRequirement : TestRequirementBase
+    public class TicTacToeTurnElapsedTestRequirement : TestRequirementBase
     {
         [SerializeField]
         private int _requiredElapsedTurns;
